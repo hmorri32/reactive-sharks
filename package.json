@@ -7,10 +7,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "async": "^2.4.1",
     "axios": "^0.16.1",
-    "chai": "^3.5.0",
-    "chai-http": "^3.0.0",            
     "body-parser": "~1.17.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.3",
     "debug": "~2.6.3",
