@@ -1,5 +1,5 @@
 const axios = require('axios');
-const fs = require('fs');
+const fs    = require('fs');
 
 const getSharkData = async () => {
   const shark = await Promise.all([
