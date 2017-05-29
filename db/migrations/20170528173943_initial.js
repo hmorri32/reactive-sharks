@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
     }),
 
     knex.schema.createTable('pings', function(table) {
-      table.integer('shark_id').unsigned()
+      table.integer('shark_id').unsigned();
       table.foreign('shark_id')
            .references('sharks.id');
       table.string('id').primary();
