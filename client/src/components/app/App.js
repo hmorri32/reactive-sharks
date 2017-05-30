@@ -9,7 +9,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-    }
+    };
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class App extends Component {
           lng={ parseFloat(ping.longitude) }
           datetime={ ping.datetime }
           />
-        )
+        );
       }
     });
   }
