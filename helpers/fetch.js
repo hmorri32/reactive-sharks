@@ -14,7 +14,6 @@ const getSharkData = async () => {
     return result.map(obj => obj.data[0]);
   })
   .then((sharkData) => {
-    console.log(sharkData[0].pings[0]);
     fs.writeFileSync('sharkData.json', JSON.stringify(sharkData), (err) => {
       if (err) throw err;
     })
