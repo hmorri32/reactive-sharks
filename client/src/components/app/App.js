@@ -9,12 +9,12 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-    }
+    };
   }
 
   componentDidMount() {
     this.props.fetchSharks();
-    this.props.fetchPings();
+    this.props.fetchPings(20);
   }
 
   renderPings() {
@@ -28,7 +28,7 @@ export default class App extends Component {
           lng={ parseFloat(ping.longitude) }
           datetime={ ping.datetime }
           />
-        )
+        );
       }
     });
   }

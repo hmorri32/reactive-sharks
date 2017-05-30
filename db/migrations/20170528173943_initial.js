@@ -12,27 +12,15 @@ exports.up = function(knex, Promise) {
       table.string('tagDate');
       table.string('tagLocation');
       table.string('description', 8000);
-      table.timestamps(true, true);
-    }),
-
-    knex.schema.createTable('pings', function(table) {
-      table.integer('shark_id').unsigned();
-      table.foreign('shark_id')
-           .references('sharks.id');
-      table.string('id').primary();
-      table.string('datetime');
-      table.string('tz_datetime');
-      table.string('latitude');
-      table.string('longitude');
+      table.json('pings');
+      table.string('profile_url');
       table.timestamps(true, true);
     })
   ]);
 };
 
-
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.dropTable('pings'),
     knex.schema.dropTable('sharks')
   ]);
 };

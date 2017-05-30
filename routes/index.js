@@ -31,37 +31,13 @@ router.get('/api/v1/sharks/:id', (request, response) => {
   .catch(() => error.serverError(response));
 });
 
-
 router.get('/api/v1/sharks/:id/pings', (request, response) => {
   const { id } = request.params;
 
-  database('pings').where('shark_id', id).select()
+  database('sharks').where('id', id).select()
   .then(sharks => {
     sharks.length > 0 
-      ? response.status(200).json(sharks)
-      : error.invalidID(request, response);
-  })
-  .catch(() => error.serverError(response));
-});
-
-router.get('/api/v1/pings', (request, response) => {
-
-  database('pings').select()
-  .then(pings => {
-    pings.length > 0
-      ? response.status(200).json(pings)
-      : response.status(404);
-  })
-  .catch(() => error.serverError(response));
-});
-
-router.get('/api/v1/pings/:id', (request, response) => {
-  const { id } = request.params;
-
-  database('pings').where('shark_id', id).select()
-  .then(ping => {
-    ping.length > 0 
-      ? response.status(200).json(ping) 
+      ? response.status(200).json(sharks[0].pings)
       : error.invalidID(request, response);
   })
   .catch(() => error.serverError(response));
