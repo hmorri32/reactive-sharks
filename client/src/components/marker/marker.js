@@ -12,30 +12,7 @@ L.Icon.Default.mergeOptions({
 });
 
 
-export const SharkMarker = ({ id, lat, lng, datetime }) => {
-  let name;
-  switch (id) {
-  case 20:
-    name = 'Nico';
-    break;
-  case 24:
-    name = 'Luis Antonio';
-    break;
-  case 25:
-    name = 'Cyndi';
-    break;
-  case 31:
-    name = 'Maddox';
-    break;
-  case 41:
-    name = 'Mary Lee';
-    break;
-  case 65:
-    name = 'Katharine';
-    break;
-  default: null;
-  }
-
+export const SharkMarker = ({ name, id, lat, lng, datetime }) => {
   return (
     <Marker position={[lat, lng]}>
       <Popup>

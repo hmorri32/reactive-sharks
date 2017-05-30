@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, TileLayer } from 'react-leaflet';
+import { Marker, Popup, Map, TileLayer } from 'react-leaflet';
 import { SharkMarker } from '../marker/marker';
 import './App.css';
 
@@ -9,6 +9,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      mapSrc: ''
     };
   }
 
@@ -18,21 +19,26 @@ export default class App extends Component {
   }
 
   renderPings() {
-    return this.props.pings.map((ping, i) => {
-      if (i < 500) {
-        return (
-          <SharkMarker
-          key={i}
-          id = { ping.shark_id }
-          lat={ parseFloat(ping.latitude) }
-          lng={ parseFloat(ping.longitude) }
-          datetime={ ping.datetime }
-          />
-        );
-      }
+    const { sharks } = this.props;
+
+    return sharks.map((shark) => {
+      return shark.pings.map((ping, i) => {
+        if (i < 1 ) {
+          return (
+            <SharkMarker
+              name =  { shark.name }
+              key = { i }
+              id = { ping.shark_id }
+              lat = { parseFloat(ping.latitude) }
+              lng = { parseFloat(ping.longitude) }
+              datetime = { ping.datetime }
+            />
+          );
+        }
+      });
     });
   }
-
+// http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}
   render() {
     return (
       <div className="App">
