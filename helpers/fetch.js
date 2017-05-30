@@ -14,7 +14,8 @@ const getSharkData = async () => {
     axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=239'),
     axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=242'),
     axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=150'),
-    axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=162')
+    axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=162'),
+    axios.get('http://www.ocearch.org/tracker/ajax/filter-sharks/?sharks%5B%5D=193')
   ])
   .then((result) => {
     return result.map(obj => obj.data[0]);
