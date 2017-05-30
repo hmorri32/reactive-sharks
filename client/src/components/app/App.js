@@ -13,6 +13,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchSharks();
+    this.props.fetchPings(20);
   }
 
   renderPings() {
