@@ -16,6 +16,8 @@ import { root } from './reducers/rootReducer';
 
 import AppContainer          from './containers/AppContainer.js';
 import registerServiceWorker from './registerServiceWorker';
+
+import 'leaflet/dist/leaflet.css';
 import './index.css';
 
 const history      = createHistory();

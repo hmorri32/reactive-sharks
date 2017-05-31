@@ -21,6 +21,7 @@
     transform: rotate(360deg); } }
 
 .leaflet-container {
+  z-index: 1;
   height: 100vh;
 }
 
@@ -30,3 +31,4 @@
   right: 0;
   z-index: 10;
 }
+
