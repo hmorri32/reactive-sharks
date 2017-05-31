@@ -11,7 +11,7 @@ export default class App extends Component {
     this.state = {
       mapSrc: '',
       current: '',
-      position: [51.505, -0.09],
+      position: [0, -0.00],
       zoom: 2,
       pings: ''
     };
