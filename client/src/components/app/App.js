@@ -101,7 +101,7 @@ export default class App extends Component {
   render() {
     const { sharks } = this.props;
     const { zoom, position, pings } = this.state;
-    
+
     return (
       <div className="App">
         <ControlPanel
@@ -117,10 +117,12 @@ export default class App extends Component {
           />
             { this.renderPings() }
             { this.renderInitialSharks() }
-          <Polyline 
-            color={'red'} 
-            positions={pings} 
-          />
+            { this.current 
+              ? <Polyline 
+                  color={'red'} 
+                  positions={pings} 
+              />: null
+            }
         </Map>
       </div>
     );
