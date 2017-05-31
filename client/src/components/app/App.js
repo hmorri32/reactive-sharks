@@ -117,11 +117,13 @@ export default class App extends Component {
           />
             { this.renderPings() }
             { this.renderInitialSharks() }
-            { !pings ? <div></div> : <Polyline 
-            color={'red'} 
-            positions={pings} 
-          /> }
-          
+            { !pings 
+              ? <div></div> 
+              : <Polyline 
+                  color={'red'} 
+                  positions={pings}
+                /> 
+              }
         </Map>
       </div>
     );
