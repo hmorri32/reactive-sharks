@@ -12,8 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-
-export const SharkMarker = ({ name, species, length, weight, gender, id, lat, lng, datetime }) => {
+export const SharkMarker = ({ name, species, length, weight, gender, lat, lng, datetime }) => {
   return (
     <Marker position={[lat, lng]}>
       <Popup>
