@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
-import { SharkMarker } from '../marker/marker';
-import { ControlPanel } from '../controls/controls';
+import { SharkMarker }              from '../marker/marker';
+import { ControlPanel }             from '../controls/controls';
+import * as helpers                 from '../../helpers/fetch.js';
 
 import './App.css';
 
@@ -13,12 +14,16 @@ export default class App extends Component {
       current: '',
       position: [0, -0.00],
       zoom: 2,
-      pings: ''
+      pings: '',
+      sharks: ''
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchSharks();
+
+    helpers.getAllSharks()
+      .then(sharks => this.setState({sharks: sharks}));
   }
 
   handleChange(e) {
@@ -44,12 +49,35 @@ export default class App extends Component {
     this.setState({pings: c});
   }
 
+  renderInitialSharks() {
+    if (this.state.sharks.length > 0 && !this.state.current) {
+      const { sharks } = this.state;
+      return sharks.map((shark) => {
+        const ping = shark.pings[0];
+        return (
+          <SharkMarker 
+            key = { shark.id }
+            name = { shark.name }
+            species = { shark.species }
+            length = { shark.length }
+            weight = { shark.weight }
+            gender = { shark.gender }
+            id = { ping.shark_id }
+            lat = { parseFloat(ping.latitude) }
+            lng = { parseFloat(ping.longitude) }
+            datetime = { ping.datetime }
+          />
+        );
+      });
+    }
+  }
+
   renderPings() {
     const { current } = this.state;
     if (current) {
       const pings = current.pings.slice(0, 10).reverse();
       return pings.map((ping, i) => {
-        while (i < 100 ) {
+        while (i < 10 ) {
           return (
             <SharkMarker
               key = { i }
@@ -73,7 +101,7 @@ export default class App extends Component {
   render() {
     const { sharks } = this.props;
     const { zoom, position, pings } = this.state;
-
+    
     return (
       <div className="App">
         <ControlPanel
@@ -81,12 +109,14 @@ export default class App extends Component {
           handleChange={ this.handleChange.bind(this) }
         />
         <Map 
+          ref={ (input) => this.map = input }
           center={ position } 
           zoom={ zoom }>
           <TileLayer 
             url='https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaG1vcnJpMzIiLCJhIjoiY2ozZDltYWl4MDAyMzMybGpmYjgwbXU4dSJ9.orU4vtAslw8Zf8K5ytPCfQ'
           />
             { this.renderPings() }
+            { this.renderInitialSharks() }
           <Polyline 
             color={'red'} 
             positions={pings} 
