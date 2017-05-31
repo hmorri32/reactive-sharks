@@ -17,8 +17,8 @@ import { root } from './reducers/rootReducer';
 import AppContainer          from './containers/AppContainer.js';
 import registerServiceWorker from './registerServiceWorker';
 
-import './index.css';
 import 'leaflet/dist/leaflet.css';
+import './index.css';
 
 const history      = createHistory();
 const middleware   = routerMiddleware(history);
