@@ -34,7 +34,7 @@ export default class App extends Component {
   updateMap() {
     const { current } = this.state;
     this.setState({
-      zoom: 3,
+      zoom: 5,
       position: [parseFloat(current.pings[0].latitude), parseFloat(current.pings[0].longitude)]
     }, this.connectTheDots(this.state.current.pings));
   }
@@ -117,12 +117,11 @@ export default class App extends Component {
           />
             { this.renderPings() }
             { this.renderInitialSharks() }
-            { this.current 
-              ? <Polyline 
-                  color={'red'} 
-                  positions={pings} 
-              />: null
-            }
+            { !pings ? <div></div> : <Polyline 
+            color={'red'} 
+            positions={pings} 
+          /> }
+          
         </Map>
       </div>
     );
