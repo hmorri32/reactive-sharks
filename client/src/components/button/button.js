@@ -1,7 +1,12 @@
 import React from 'react';
 
-export const Button = ({ btnName, name }) => {
+export const Button = ({ btnName, handleClick }) => {
   return (
-    <button>{ btnName }</button>
+    <button
+      onClick={ (e) => handleClick(e) }
+      value={ btnName }
+    >
+    { btnName }
+    </button>
   )
 }
