@@ -21,14 +21,23 @@ export default class App extends Component {
 
   componentWillMount() {
     this.props.fetchSharks();
+    this.putSharksInState();
+  }
 
+  putSharksInState() {
     helpers.getAllSharks()
       .then(sharks => this.setState({sharks: sharks}));
   }
 
   handleChange(e) {
     const { sharks } = this.props;
-    this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
+    if(e.target.value === 'select a shark'){
+      this.setState({ current: '', pings: '', zoom: '2', position: [0, -0]});
+      this.putSharksInState();
+      this.renderInitialSharks();
+    } else {
+      this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
+    }
   }
 
   updateMap() {
@@ -97,7 +106,6 @@ export default class App extends Component {
     }
   }
 
-// http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}
   render() {
     const { sharks } = this.props;
     const { zoom, position, pings } = this.state;
