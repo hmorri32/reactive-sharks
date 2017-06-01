@@ -9,11 +9,17 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      mapSrc: '',
+      mapLayers: [
+        { type: 'Satellite', url: 'World_Imagery/MapServer/' },
+        { type: 'Nat Geo', url: 'NatGeo_World_Map/MapServer/' },
+        { type: 'Physical', url: 'World_Physical_Map/MapServer/' },
+        { type: 'Street', url: 'World_Street_Map/MapServer/' }
+      ],
+      currentLayer: 'World_Imagery/MapServer/',
       current: '',
       position: [0, -0.00],
       zoom: 2,
-      pings: ''
+      pings: '',
     };
   }
 
@@ -26,10 +32,19 @@ export default class App extends Component {
     this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
   }
 
+  handleClick(e) {
+    const { mapLayers } = this.state;
+    return mapLayers.map(layer => {
+      if (layer.type === e.target.value) {
+        this.setState({ currentLayer: layer.url });
+      }
+    })
+  }
+
   updateMap() {
     const { current } = this.state;
     this.setState({
-      zoom: 3,
+      zoom: 4,
       position: [parseFloat(current.pings[0].latitude), parseFloat(current.pings[0].longitude)]
     }, this.connectTheDots(this.state.current.pings));
   }
@@ -69,27 +84,27 @@ export default class App extends Component {
     }
   }
 
-// http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}
   render() {
     const { sharks } = this.props;
-    const { zoom, position, pings } = this.state;
-
+    const { zoom, position, pings, base, mapLayers, currentLayer } = this.state;
     return (
       <div className="App">
         <ControlPanel
+          mapLayers={ mapLayers }
           sharks={ sharks }
           handleChange={ this.handleChange.bind(this) }
+          handleClick={ this.handleClick.bind(this) }
         />
-        <Map 
-          center={ position } 
+        <Map
+          center={ position }
           zoom={ zoom }>
-          <TileLayer 
-            url='https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaG1vcnJpMzIiLCJhIjoiY2ozZDltYWl4MDAyMzMybGpmYjgwbXU4dSJ9.orU4vtAslw8Zf8K5ytPCfQ'
+          <TileLayer
+            url={`http://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
           />
             { this.renderPings() }
-          <Polyline 
-            color={'red'} 
-            positions={pings} 
+          <Polyline
+            color={'red'}
+            positions={pings}
           />
         </Map>
       </div>
