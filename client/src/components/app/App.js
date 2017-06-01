@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
-import { SharkMarker } from '../marker/marker';
-import { ControlPanel } from '../controls/controls';
+import { SharkMarker }              from '../marker/marker';
+import { ControlPanel }             from '../controls/controls';
+import * as helpers                 from '../../helpers/fetch.js';
 
 import './App.css';
 
@@ -20,16 +21,29 @@ export default class App extends Component {
       position: [0, -0.00],
       zoom: 2,
       pings: '',
+      sharks: ''
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchSharks();
+    this.putSharksInState();
+  }
+
+  putSharksInState() {
+    helpers.getAllSharks()
+      .then(sharks => this.setState({sharks: sharks}));
   }
 
   handleChange(e) {
     const { sharks } = this.props;
-    this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
+    if(e.target.value === 'select a shark'){
+      this.setState({ current: '', pings: '', zoom: '2', position: [0, -0]});
+      this.putSharksInState();
+      this.renderInitialSharks();
+    } else {
+      this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
+    }
   }
 
   handleClick(e) {
@@ -44,7 +58,7 @@ export default class App extends Component {
   updateMap() {
     const { current } = this.state;
     this.setState({
-      zoom: 4,
+      zoom: 5,
       position: [parseFloat(current.pings[0].latitude), parseFloat(current.pings[0].longitude)]
     }, this.connectTheDots(this.state.current.pings));
   }
@@ -59,12 +73,35 @@ export default class App extends Component {
     this.setState({pings: c});
   }
 
+  renderInitialSharks() {
+    if (this.state.sharks.length > 0 && !this.state.current) {
+      const { sharks } = this.state;
+      return sharks.map((shark) => {
+        const ping = shark.pings[0];
+        return (
+          <SharkMarker 
+            key = { shark.id }
+            name = { shark.name }
+            species = { shark.species }
+            length = { shark.length }
+            weight = { shark.weight }
+            gender = { shark.gender }
+            id = { ping.shark_id }
+            lat = { parseFloat(ping.latitude) }
+            lng = { parseFloat(ping.longitude) }
+            datetime = { ping.datetime }
+          />
+        );
+      });
+    }
+  }
+
   renderPings() {
     const { current } = this.state;
     if (current) {
       const pings = current.pings.slice(0, 10).reverse();
       return pings.map((ping, i) => {
-        while (i < 100 ) {
+        while (i < 10 ) {
           return (
             <SharkMarker
               key = { i }
@@ -95,17 +132,22 @@ export default class App extends Component {
           handleChange={ this.handleChange.bind(this) }
           handleClick={ this.handleClick.bind(this) }
         />
-        <Map
-          center={ position }
+        <Map 
+          ref={ (input) => this.map = input }
+          center={ position } 
           zoom={ zoom }>
           <TileLayer
             url={`http://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
           />
             { this.renderPings() }
-          <Polyline
-            color={'red'}
-            positions={pings}
-          />
+            { this.renderInitialSharks() }
+            { !pings 
+              ? <div></div> 
+              : <Polyline 
+                  color={'red'} 
+                  positions={pings}
+                /> 
+              }
         </Map>
       </div>
     );
