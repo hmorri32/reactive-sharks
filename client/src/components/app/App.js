@@ -38,7 +38,7 @@ export default class App extends Component {
   handleChange(e) {
     const { sharks } = this.props;
     if(e.target.value === 'select a shark'){
-      this.setState({ current: '', pings: '', zoom: '2', position: [0, -0]});
+      this.setState({ current: '', pings: '', zoom: 2, position: [0, -0]});
       this.putSharksInState();
       this.renderInitialSharks();
     } else {
@@ -52,7 +52,7 @@ export default class App extends Component {
       if (layer.type === e.target.value) {
         this.setState({ currentLayer: layer.url });
       }
-    })
+    });
   }
 
   updateMap() {
@@ -123,7 +123,7 @@ export default class App extends Component {
 
   render() {
     const { sharks } = this.props;
-    const { zoom, position, pings, base, mapLayers, currentLayer } = this.state;
+    const { zoom, position, pings, mapLayers, currentLayer } = this.state;
     return (
       <div className="App">
         <ControlPanel
