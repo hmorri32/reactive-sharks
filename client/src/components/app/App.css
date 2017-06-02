@@ -1,3 +1,29 @@
+.controls {
+  background-color: rgba(70, 70, 70, 0.34);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2; }
+
+.menu-btn {
+  height: 30px;
+  width: 30px;
+  display: block;
+  margin: 0 auto; }
+
+.shark-select {
+  width: 65%; }
+
+.map-btn {
+  height: 20px;
+  width: 20px; }
+
+.shark-select,
+.map-btn {
+  display: block;
+  margin: 0 auto; }
+
 .App {
   text-align: center; }
 
@@ -21,14 +47,6 @@
     transform: rotate(360deg); } }
 
 .leaflet-container {
-  z-index: 1;
   height: 100vh;
-}
-
-.controls {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 10;
-}
-
+  margin: 0 auto;
+  z-index: 1; }
