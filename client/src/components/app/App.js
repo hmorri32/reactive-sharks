@@ -60,7 +60,7 @@ export default class App extends Component {
     this.setState({
       zoom: 5,
       position: [parseFloat(current.pings[0].latitude), parseFloat(current.pings[0].longitude)]
-    }, this.connectTheDots(this.state.current.pings));
+    }, this.connectTheDots(current.pings));
   }
 
   connectTheDots(data) {
@@ -79,7 +79,7 @@ export default class App extends Component {
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <SharkMarker 
+          <SharkMarker
             key = { shark.id }
             name = { shark.name }
             species = { shark.species }
@@ -132,21 +132,24 @@ export default class App extends Component {
           handleChange={ this.handleChange.bind(this) }
           handleClick={ this.handleClick.bind(this) }
         />
-        <Map 
+        <Map
+          animate={ true }
+          useFlyTo={ true }
           ref={ (input) => this.map = input }
-          center={ position } 
-          zoom={ zoom }>
+          center={ position }
+          zoom={ zoom }
+          >
           <TileLayer
             url={`http://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
           />
             { this.renderPings() }
             { this.renderInitialSharks() }
-            { !pings 
-              ? <div></div> 
-              : <Polyline 
-                  color={'red'} 
+            { !pings
+              ? <div></div>
+              : <Polyline
+                  color={'red'}
                   positions={pings}
-                /> 
+                />
               }
         </Map>
       </div>
