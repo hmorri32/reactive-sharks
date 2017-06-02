@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../button/button';
+import menu from '../../images/list.svg'
 
 export const ControlPanel = ({ sharks, handleChange, mapLayers, handleClick }) => {
 
@@ -26,9 +27,9 @@ export const ControlPanel = ({ sharks, handleChange, mapLayers, handleClick }) =
   }
 
   return (
-    <aside className="controls">
-      <h3>ControlPanel</h3>
-      <select onChange={ (e) => handleChange(e) }>
+    <aside className='controls'>
+      <img className='menu-btn' src={ menu } alt='hamburger menu' />
+      <select className='shark-select' onChange={ (e) => handleChange(e) }>
         <option value='select a shark'>Select a shark</option>
         { renderOptions() }
       </select>
