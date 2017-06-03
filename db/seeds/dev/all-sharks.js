@@ -1,6 +1,6 @@
-const sharkData = require('../../../sharkData.json');
+const sharkData = require('../../../sharkData2.json');
+const flat = [].concat.apply([], sharkData)''
 
-// const { sharks } = require('../../../helpers/data-cleaner.js');
 
 exports.seed = function(knex, Promise) {
   const createShark = (knex, shark) => {
@@ -26,7 +26,7 @@ exports.seed = function(knex, Promise) {
   return knex('sharks').del()
     .then(() => {
       const sharkPromises = [];
-      sharkData.forEach((shark) => {
+      flat.forEach((shark) => {
         sharkPromises.push(createShark(knex, shark));
       });
       return Promise.all(sharkPromises);
