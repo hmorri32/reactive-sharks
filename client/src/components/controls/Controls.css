@@ -1,10 +1,15 @@
 .controls {
-  background-color: rgba(70, 70, 70, 0.34);
+  background-color: rgba(70, 70, 70, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
   position: absolute;
-  top: 10px;
+  top: 120px;
   right: 10px;
-  bottom: 10px;
+  width: 40px;
   z-index: 2; }
+
+.controls .map-toggle-wrap:last-child {
+  margin-bottom: 0; }
 
 .menu-btn {
   height: 30px;
@@ -13,13 +18,17 @@
   margin: 0 auto; }
 
 .shark-select {
-  width: 65%; }
-
-.map-btn {
-  height: 20px;
-  width: 20px; }
-
-.shark-select,
-.map-btn {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  width: 200px;
+  height: 34px;
+  margin: 0 auto;
   display: block;
-  margin: 0 auto; }
+  border-radius: 5px;
+  background-color: #578cb8;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  background: url("http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-carcharhinus-leucas-1.png") 96%/15% no-repeat white;
+  z-index: 10; }
