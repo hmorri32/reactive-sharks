@@ -1,17 +1,41 @@
 import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
-import { SharkMarker }              from '../marker/marker';
+import SharkMarker                  from '../marker/marker';
 import { ControlPanel }             from '../controls/controls';
 import { SpeciesPanel }             from '../controls/species';
+import AppContainer                 from '../../containers/AppContainer';
 import * as helpers                 from '../../helpers/fetch.js';
 import satellite                    from '../../images/satellite.svg';
 import globe                        from '../../images/globe.svg';
 import road                         from '../../images/road.svg';
 import mountain                     from '../../images/snow.svg';
+import { Route }                    from 'react-router-dom';
+import { Link }                     from 'react-router-dom';
+import { Marker, Popup }            from 'react-leaflet';
 
 import './App.css';
 
-export default class App extends Component {
+function withContext(WrappedComponent, context){
+
+  class ContextProvider extends React.Component {
+    getChildContext() {
+      return context;
+    }
+
+    render() {
+      return <WrappedComponent {...this.props} />
+    }
+  }
+
+  ContextProvider.childContextTypes = {};
+  Object.keys(context).forEach(key => {
+    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired; 
+  });
+
+  return ContextProvider;
+}
+
+class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -28,6 +52,10 @@ export default class App extends Component {
       pings: '',
       sharks: '',
     };
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
   }
 
   componentWillMount() {
@@ -100,21 +128,35 @@ export default class App extends Component {
     const { current } = this.state;
     const { sharks } = this.props;
     if (sharks.length > 0 && !current) {
+
+    const LinkWithContext = withContext(Link, this.context);
+
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <SharkMarker
-            key = { shark.id }
-            name = { shark.name }
-            species = { shark.species }
-            length = { shark.length }
-            weight = { shark.weight }
-            gender = { shark.gender }
-            id = { ping.shark_id }
-            lat = { parseFloat(ping.latitude) }
-            lng = { parseFloat(ping.longitude) }
-            datetime = { ping.datetime }
-          />
+          <Marker 
+            position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
+            key = { shark.id }>
+            <Popup keepInView={true}>
+              <div>
+                <h3>Name: { shark.name }</h3>
+                <p>Species: { shark.species }</p>
+                <p>Length: { shark.length }</p>
+                <p>Weight: { shark.weight }</p>
+                <p>Gender: { shark.gender }</p>
+                <p>Date: { shark.datetime }</p>
+                <p>Latitude: { ping.latitude }</p>
+                <p>Longitude: { ping.longitude }</p> 
+                <p>Datetime: { ping.datetime }</p>                               
+                <LinkWithContext to={{
+                  pathname: `/yung-charts/${shark.id}`,
+                  sharkData: shark
+                }}>
+                  <h2>{shark.name} detail</h2>
+                </LinkWithContext>
+              </div>
+            </Popup>
+          </Marker>
         );
       });
     }
@@ -123,22 +165,34 @@ export default class App extends Component {
   renderPings() {
     const { current } = this.state;
     if (current) {
+      const LinkWithContext = withContext(Link, this.context);
       const pings = current.pings.slice(0, 10).reverse();
       return pings.map((ping, i) => {
         while (i < 10 ) {
           return (
-            <SharkMarker
-              key = { i }
-              name =  { current.name }
-              species = { current.species }
-              length = { current.length }
-              weight = { current.weight }
-              gender = { current.gender }
-              id = { ping.shark_id }
-              lat = { parseFloat(ping.latitude) }
-              lng = { parseFloat(ping.longitude) }
-              datetime = { ping.datetime }
-            />
+            <Marker 
+              position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
+              key = { i }>
+              <Popup keepInView={true}>
+                <div>
+                  <h3>Name: { current.name }</h3>
+                  <p>Species: { current.species }</p>
+                  <p>Length: { current.length }</p>
+                  <p>Weight: { current.weight }</p>
+                  <p>Gender: { current.gender }</p>
+                  <p>Date: { current.datetime }</p>
+                  <p>Latitude: { ping.latitude }</p>
+                  <p>Longitude: { ping.longitude }</p>                
+                  <p>Datetime: { ping.datetime }</p>                
+                  <LinkWithContext to={{
+                    pathname: `/yung-charts/${current.id}`,
+                    sharkData: this.state.current
+                  }}>
+                    <h2>{current.name} detail</h2>
+                  </LinkWithContext>
+                </div>
+              </Popup>
+            </Marker>
           );
         }
       });
@@ -154,7 +208,10 @@ export default class App extends Component {
           <option value='select a shark'>Select a shark</option>
           { this.renderOptions() }
         </select>
+        {this.currentShark && <div>this.currentShark.name</div>}
         <ControlPanel
+          history = {this.props.history}
+          router = {this.props.router}
           mapLayers={ mapLayers }
           sharks={ sharks }
           handleChange={ this.handleChange.bind(this) }
@@ -179,6 +236,7 @@ export default class App extends Component {
                   positions={pings}
                 />
               }
+
         </Map>
         <SpeciesPanel
           species={ species }
@@ -188,3 +246,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default AppContainer(App);

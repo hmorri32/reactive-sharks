@@ -11,29 +11,28 @@ import { Route }           from 'react-router-dom';
 import thunk               from 'redux-thunk';
 import logger              from 'redux-logger';
 
-import { root } from './reducers/rootReducer';
-
-
-import AppContainer          from './containers/AppContainer.js';
-import registerServiceWorker from './registerServiceWorker';
+import { root }      from './reducers/rootReducer';
+import App           from './components/app/App.js';
+import SharkDetail   from './components/charts/Charts.js';
 
 import 'leaflet/dist/leaflet.css';
 import './index.css';
 
-const history      = createHistory();
-const middleware   = routerMiddleware(history);
-const devTools     = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const history    = createHistory();
+const middleware = routerMiddleware(history);
+const devTools   = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const store = createStore(root, devTools, applyMiddleware(middleware, thunk, logger));
 
 const router = (
   <Provider store={ store }>
     <ConnectedRouter history={ history } >
-      <Route path='/' component={ AppContainer } />
+      <div>
+        <Route exact path='/' component={ App } />
+        <Route exact path='/yung-charts/:id' component={ SharkDetail } />
+      </div>
     </ConnectedRouter>
   </Provider>
 );
 
-
 render(router, document.getElementById('root'));
-registerServiceWorker();
