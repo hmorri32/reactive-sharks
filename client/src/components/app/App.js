@@ -1,6 +1,6 @@
 import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
-import { SharkMarker }              from '../marker/marker';
+import SharkMarker                  from '../marker/marker';
 import { ControlPanel }             from '../controls/controls';
 import AppContainer                 from '../../containers/AppContainer';
 import * as helpers                 from '../../helpers/fetch.js';
@@ -8,6 +8,8 @@ import satellite                    from '../../images/satellite.svg';
 import globe                        from '../../images/globe.svg';
 import road                         from '../../images/road.svg';
 import mountain                     from '../../images/snow.svg';
+import { Route }                    from 'react-router-dom';
+import { Link }             from 'react-router-dom';
 
 import './App.css';
 
@@ -121,6 +123,7 @@ class App extends Component {
         while (i < 10 ) {
           return (
             <SharkMarker
+              history = {this.props.history}
               key = { i }
               name =  { current.name }
               species = { current.species }
@@ -172,6 +175,7 @@ class App extends Component {
                   positions={pings}
                 />
               }
+
         </Map>
       </div>
     );

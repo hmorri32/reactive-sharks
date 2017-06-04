@@ -2,7 +2,6 @@ import React        from 'react';
 import { render }   from 'react-dom';
 
 import { createStore, applyMiddleware } from 'redux';
-import registerServiceWorker            from './registerServiceWorker';
 import { routerMiddleware }             from 'react-router-redux';
 import createHistory                    from 'history/createBrowserHistory';
 
@@ -12,9 +11,9 @@ import { Route }           from 'react-router-dom';
 import thunk               from 'redux-thunk';
 import logger              from 'redux-logger';
 
-import { root } from './reducers/rootReducer';
-import App      from './components/app/App.js';
-import Charts   from './components/charts/Charts.js';
+import { root }      from './reducers/rootReducer';
+import App           from './components/app/App.js';
+import SharkDetail   from './components/charts/Charts.js';
 
 import 'leaflet/dist/leaflet.css';
 import './index.css';
@@ -30,12 +29,10 @@ const router = (
     <ConnectedRouter history={ history } >
       <div>
         <Route exact path='/' component={ App } />
-        <Route exact path='/yung-charts' component={ Charts } />
+        <Route exact path='/yung-charts/' component={ SharkDetail } />
       </div>
     </ConnectedRouter>
   </Provider>
 );
 
-
 render(router, document.getElementById('root'));
-registerServiceWorker();
