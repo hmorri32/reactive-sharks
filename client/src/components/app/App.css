@@ -1,3 +1,98 @@
+.controls {
+  background-color: rgba(70, 70, 70, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  position: absolute;
+  top: 120px;
+  right: 10px;
+  width: 40px;
+  z-index: 2; }
+
+.controls .map-toggle-wrap:last-child {
+  margin-bottom: 0; }
+
+.menu-btn {
+  height: 30px;
+  width: 30px;
+  display: block;
+  margin: 0 auto; }
+
+.shark-select {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  width: 200px;
+  height: 34px;
+  margin: 0 auto;
+  display: block;
+  border-radius: 5px;
+  background-color: #578cb8;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  background: url("http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-carcharhinus-leucas-1.png") 96%/15% no-repeat white;
+  z-index: 10; }
+
+.map-toggle-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0 0 15px 0;
+  cursor: pointer; }
+
+.map-toggle-wrap:hover {
+  background-color: #9D0300; }
+
+.map-toggle-wrap:hover .map-type {
+  position: absolute;
+  left: -220%;
+  display: block; }
+
+.map-type {
+  position: relative;
+  padding: 5px;
+  display: none;
+  background-color: #9D0300;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: .9em;
+  width: 70px; }
+  .map-type:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: -20px;
+    width: 0;
+    height: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: #9D0300;
+    border-top-width: .75rem;
+    border-right-width: .75rem;
+    border-bottom-width: .75rem;
+    border-left-width: .75rem;
+    border-style: solid; }
+
+.map-btn {
+  display: block;
+  margin: 15px 0;
+  padding: 0;
+  background: transparent;
+  border-style: none;
+  outline: none;
+  width: 100%; }
+
+.map-toggle-btn {
+  display: block;
+  height: 25px;
+  width: 25px;
+  margin: 0 auto;
+  cursor: pointer; }
+
 .App {
   text-align: center; }
 
@@ -21,14 +116,34 @@
     transform: rotate(360deg); } }
 
 .leaflet-container {
-  z-index: 1;
   height: 100vh;
-}
+  margin: 0 auto;
+  z-index: 1; }
 
-.controls {
+.leaflet-control-container {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 10;
-}
+  right: 43px;
+  border: none; }
 
+.leaflet-top {
+  top: 15px;
+  width: 40px; }
+
+.leaflet-touch .leaflet-bar {
+  margin: 0 auto;
+  position: absolute;
+  right: 7px;
+  width: 40px;
+  background-color: rgba(70, 70, 70, 0.5);
+  border-radius: 0;
+  height: 85px; }
+
+.leaflet-control-zoom-in {
+  position: absolute;
+  top: 10px;
+  left: 5px; }
+
+.leaflet-control-zoom-out {
+  position: absolute;
+  top: 41px;
+  left: 5px; }

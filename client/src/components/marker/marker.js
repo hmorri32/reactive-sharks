@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 export const SharkMarker = ({ name, species, length, weight, gender, lat, lng, datetime }) => {
   return (
     <Marker position={[lat, lng]}>
-      <Popup>
+      <Popup keepInView={ true }>
         <div>
           <h3>Name: { name }</h3>
           <p>Species: { species }</p>
@@ -25,7 +25,6 @@ export const SharkMarker = ({ name, species, length, weight, gender, lat, lng, d
           <p>Date: { datetime }</p>
           <p>Latitude: { lat }</p>
           <p>Longitude: { lng }</p>
-          <Button btnName='Track Shark' />
         </div>
      </Popup>
     </Marker>

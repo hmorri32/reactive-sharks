@@ -8,30 +8,15 @@ export const ControlPanel = ({ sharks, handleChange, mapLayers, handleClick }) =
       <Button
         className='map-btn'
         key={i}
-        btnName={ layer.type }
+        icon={ layer.img }
+        id={ layer.type }
         handleClick={ handleClick }
       />
     );
   }
 
-  const renderOptions = () => {
-    return sharks.map((shark, i) =>
-      <option
-        key={i}
-        value={ shark.name }
-      >
-        { shark.name }
-      </option>
-    );
-  }
-
   return (
-    <aside className="controls">
-      <h3>ControlPanel</h3>
-      <select onChange={ (e) => handleChange(e) }>
-        <option value='select a shark'>Select a shark</option>
-        { renderOptions() }
-      </select>
+    <aside className='controls'>
       { renderMapBtns() }
     </aside>
   )
