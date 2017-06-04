@@ -7,12 +7,19 @@ class SharkDetail extends Component {
   constructor() {
     super();
     this.state = {
-      sharks: ''
+      sharks: '',
+      currentShark:''
     };
   }
 
   componentWillMount() {
     this.putSharksInState();
+  }
+
+  componentDidMount() {
+    if (this.props.location.sharkData) {
+      this.setState({ currentShark: this.props.location.sharkData });
+    }
   }
 
   putSharksInState() {

@@ -141,7 +141,8 @@ class App extends Component {
                 <p>Longitude: { ping.longitude }</p> 
                 <p>Datetime: { ping.datetime }</p>                               
                 <LinkWithContext to={{
-                  pathname: `/yung-charts/${shark.id}`
+                  pathname: `/yung-charts/${shark.id}`,
+                  sharkData: shark
                 }}>
                   <h2>{shark.name} detail</h2>
                 </LinkWithContext>
@@ -176,7 +177,8 @@ class App extends Component {
                   <p>Longitude: { ping.longitude }</p>                
                   <p>Datetime: { ping.datetime }</p>                
                   <LinkWithContext to={{
-                    pathname: `/yung-charts/${current.id}`
+                    pathname: `/yung-charts/${current.id}`,
+                    sharkData: this.state.current
                   }}>
                     <h2>{current.name} detail</h2>
                   </LinkWithContext>
