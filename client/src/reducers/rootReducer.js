@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer }   from 'react-router-redux';
-import { sharks, pings }   from './reducers';
+import { sharks, species }   from './reducers';
 
 export const root = combineReducers({
   sharks,
-  pings,
+  species,
   router: routerReducer
 });
