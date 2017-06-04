@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Marker, Popup }    from 'react-leaflet';
 import L                    from 'leaflet';
-import { Button }           from '../button/button';
-import { Link }             from 'react-router-dom';
-import AppContainer         from '../../containers/AppContainer'
+import AppContainer         from '../../containers/AppContainer';
 
 L.Icon.Default.imagePath = '.';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -15,10 +13,9 @@ L.Icon.Default.mergeOptions({
 });
 
 class SharkMarker extends Component {
-
   render() {
     return (
-    <Marker router={this.props.router} history={this.props.history} position={[this.props.lat, this.props.lng]}>
+    <Marker position={[this.props.lat, this.props.lng]}>
       <Popup keepInView={ true }>
         <div>
           <h3>Name: { this.props.name }</h3>
@@ -29,9 +26,6 @@ class SharkMarker extends Component {
           <p>Date: { this.props.datetime }</p>
           <p>Latitude: { this.props.lat }</p>
           <p>Longitude: { this.props.lng }</p>
-          <a href='/yung-charts'>
-            <h2 className='SUH'>HEY</h2>
-          </a>
         </div>
      </Popup>
     </Marker>

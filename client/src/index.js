@@ -29,7 +29,7 @@ const router = (
     <ConnectedRouter history={ history } >
       <div>
         <Route exact path='/' component={ App } />
-        <Route exact path='/yung-charts/' component={ SharkDetail } />
+        <Route exact path='/yung-charts/:id' component={ SharkDetail } />
       </div>
     </ConnectedRouter>
   </Provider>

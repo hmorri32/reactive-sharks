@@ -9,9 +9,30 @@ import globe                        from '../../images/globe.svg';
 import road                         from '../../images/road.svg';
 import mountain                     from '../../images/snow.svg';
 import { Route }                    from 'react-router-dom';
-import { Link }             from 'react-router-dom';
+import { Link }                     from 'react-router-dom';
+import { Marker, Popup }            from 'react-leaflet';
 
 import './App.css';
+
+function withContext(WrappedComponent, context){
+
+  class ContextProvider extends React.Component {
+    getChildContext() {
+      return context;
+    }
+
+    render() {
+      return <WrappedComponent {...this.props} />
+    }
+  }
+
+  ContextProvider.childContextTypes = {};
+  Object.keys(context).forEach(key => {
+    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired; 
+  });
+
+  return ContextProvider;
+}
 
 class App extends Component {
   constructor() {
@@ -30,6 +51,10 @@ class App extends Component {
       pings: '',
       sharks: ''
     };
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
   }
 
   componentWillMount() {
@@ -52,6 +77,7 @@ class App extends Component {
       this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
     }
   }
+
 
   handleClick(e) {
     const { mapLayers } = this.state;
@@ -93,23 +119,33 @@ class App extends Component {
   }
 
   renderInitialSharks() {
+
+    const LinkWithContext = withContext(Link, this.context);
+
     if (this.state.sharks.length > 0 && !this.state.current) {
       const { sharks } = this.state;
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <SharkMarker
-            key = { shark.id }
-            name = { shark.name }
-            species = { shark.species }
-            length = { shark.length }
-            weight = { shark.weight }
-            gender = { shark.gender }
-            id = { ping.shark_id }
-            lat = { parseFloat(ping.latitude) }
-            lng = { parseFloat(ping.longitude) }
-            datetime = { ping.datetime }
-          />
+          <Marker position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}            key = { shark.id }>
+            <Popup keepInView={true}>
+              <div>
+                <h3>Name: { shark.name }</h3>
+                <p>Species: { shark.species }</p>
+                <p>Length: { shark.length }</p>
+                <p>Weight: { shark.weight }</p>
+                <p>Gender: { shark.gender }</p>
+                <p>Date: { shark.datetime }</p>
+                <p>Latitude: { ping.latitude }</p>
+                <p>Longitude: { ping.longitude }</p>                
+                <LinkWithContext to={{
+                  pathname: `/yung-charts/${shark.id}`
+                }}>
+                  {shark.name} detail
+                </LinkWithContext>
+              </div>
+            </Popup>
+          </Marker>
         );
       });
     }
@@ -123,7 +159,6 @@ class App extends Component {
         while (i < 10 ) {
           return (
             <SharkMarker
-              history = {this.props.history}
               key = { i }
               name =  { current.name }
               species = { current.species }
@@ -150,7 +185,10 @@ class App extends Component {
           <option value='select a shark'>Select a shark</option>
           { this.renderOptions() }
         </select>
+        {this.currentShark && <div>this.currentShark.name</div>}
         <ControlPanel
+          history = {this.props.history}
+          router = {this.props.router}
           mapLayers={ mapLayers }
           sharks={ sharks }
           handleChange={ this.handleChange.bind(this) }
