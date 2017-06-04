@@ -78,7 +78,6 @@ class App extends Component {
     }
   }
 
-
   handleClick(e) {
     const { mapLayers } = this.state;
     return mapLayers.map(layer => {
@@ -127,7 +126,9 @@ class App extends Component {
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <Marker position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}            key = { shark.id }>
+          <Marker 
+            position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
+            key = { shark.id }>
             <Popup keepInView={true}>
               <div>
                 <h3>Name: { shark.name }</h3>
@@ -137,11 +138,12 @@ class App extends Component {
                 <p>Gender: { shark.gender }</p>
                 <p>Date: { shark.datetime }</p>
                 <p>Latitude: { ping.latitude }</p>
-                <p>Longitude: { ping.longitude }</p>                
+                <p>Longitude: { ping.longitude }</p> 
+                <p>Datetime: { ping.datetime }</p>                               
                 <LinkWithContext to={{
                   pathname: `/yung-charts/${shark.id}`
                 }}>
-                  {shark.name} detail
+                  <h2>{shark.name} detail</h2>
                 </LinkWithContext>
               </div>
             </Popup>
@@ -154,22 +156,33 @@ class App extends Component {
   renderPings() {
     const { current } = this.state;
     if (current) {
+      const LinkWithContext = withContext(Link, this.context);
       const pings = current.pings.slice(0, 10).reverse();
       return pings.map((ping, i) => {
         while (i < 10 ) {
           return (
-            <SharkMarker
-              key = { i }
-              name =  { current.name }
-              species = { current.species }
-              length = { current.length }
-              weight = { current.weight }
-              gender = { current.gender }
-              id = { ping.shark_id }
-              lat = { parseFloat(ping.latitude) }
-              lng = { parseFloat(ping.longitude) }
-              datetime = { ping.datetime }
-            />
+            <Marker 
+              position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
+              key = { i }>
+              <Popup keepInView={true}>
+                <div>
+                  <h3>Name: { current.name }</h3>
+                  <p>Species: { current.species }</p>
+                  <p>Length: { current.length }</p>
+                  <p>Weight: { current.weight }</p>
+                  <p>Gender: { current.gender }</p>
+                  <p>Date: { current.datetime }</p>
+                  <p>Latitude: { ping.latitude }</p>
+                  <p>Longitude: { ping.longitude }</p>                
+                  <p>Datetime: { ping.datetime }</p>                
+                  <LinkWithContext to={{
+                    pathname: `/yung-charts/${current.id}`
+                  }}>
+                    <h2>{current.name} detail</h2>
+                  </LinkWithContext>
+                </div>
+              </Popup>
+            </Marker>
           );
         }
       });
