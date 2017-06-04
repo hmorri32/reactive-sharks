@@ -8,9 +8,6 @@ import satellite                    from '../../images/satellite.svg';
 import globe                        from '../../images/globe.svg';
 import road                         from '../../images/road.svg';
 import mountain                     from '../../images/snow.svg';
-import { Route }                    from 'react-router-dom';
-import { Link }             from 'react-router-dom';
-
 import './App.css';
 
 class App extends Component {
