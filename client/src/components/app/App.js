@@ -2,6 +2,7 @@ import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
 import { SharkMarker }              from '../marker/marker';
 import { ControlPanel }             from '../controls/controls';
+import AppContainer                 from '../../containers/AppContainer';
 import * as helpers                 from '../../helpers/fetch.js';
 import satellite                    from '../../images/satellite.svg';
 import globe                        from '../../images/globe.svg';
@@ -10,7 +11,7 @@ import mountain                     from '../../images/snow.svg';
 
 import './App.css';
 
-export default class App extends Component {
+class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -176,3 +177,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default AppContainer(App);
