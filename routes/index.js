@@ -10,18 +10,25 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/v1/sharks', (request, response) => {
-  database('sharks').select()
-  .then(sharks => {
-    sharks.length > 0
-      ? response.status(200).json(sharks)
-      : response.status(404);
-  })
-  .catch(() => error.serverError(response));
+  const { species } = request.query;
+
+  if(!species) {
+    database('sharks').select()
+    .then(sharks => response.status(200).json(sharks))
+    .catch(() => response.status(404));
+  } else {
+    database('sharks').where('species', 'like', `%${species}%`).select()
+    .then(sharks => {
+      sharks.length > 0
+        ? response.status(200).json(sharks)
+        : error.queryArrayLength(request, response);
+    });
+  }
 });
 
 router.get('/api/v1/sharks/:id', (request, response) => {
   const { id } = request.params;
-
+  console.log(id);
   database('sharks').where('id', id).select()
   .then(shark => {
     shark.length > 0
@@ -36,7 +43,7 @@ router.get('/api/v1/sharks/:id/pings', (request, response) => {
 
   database('sharks').where('id', id).select()
   .then(sharks => {
-    sharks.length > 0 
+    sharks.length > 0
       ? response.status(200).json(sharks[0].pings)
       : error.invalidID(request, response);
   })
