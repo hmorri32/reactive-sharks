@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Button = ({ btnName, handleClick, className, icon, id }) => {
+export const Button = ({ handleClick, className, icon, id }) => {
   return (
     <div className='map-toggle-wrap'>
       <span className='map-type'>{ id }</span>

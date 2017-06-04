@@ -2,6 +2,7 @@ import React, { Component }         from 'react';
 import { Map, TileLayer, Polyline } from 'react-leaflet';
 import SharkMarker                  from '../marker/marker';
 import { ControlPanel }             from '../controls/controls';
+import { SpeciesPanel }             from '../controls/species';
 import AppContainer                 from '../../containers/AppContainer';
 import * as helpers                 from '../../helpers/fetch.js';
 import satellite                    from '../../images/satellite.svg';
@@ -49,7 +50,7 @@ class App extends Component {
       position: [0, -0.00],
       zoom: 2,
       pings: '',
-      sharks: ''
+      sharks: '',
     };
   }
 
@@ -59,19 +60,19 @@ class App extends Component {
 
   componentWillMount() {
     this.props.fetchSharks();
-    this.putSharksInState();
   }
 
-  putSharksInState() {
-    helpers.getAllSharks()
-      .then(sharks => this.setState({sharks: sharks}));
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sharks !== nextProps.sharks) {
+      this.setState({ sharks: nextProps.sharks })
+    }
   }
 
   handleChange(e) {
     const { sharks } = this.props;
-    if(e.target.value === 'select a shark'){
+    if (e.target.value === 'select a shark') {
       this.setState({ current: '', pings: '', zoom: 2, position: [0, -0]});
-      this.putSharksInState();
+      this.props.fetchSharks();
       this.renderInitialSharks();
     } else {
       this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
@@ -105,8 +106,14 @@ class App extends Component {
     this.setState({pings: c});
   }
 
+  handleSharkType(e) {
+    this.props.fetchSpecie(e.target.value);
+    this.renderInitialSharks();
+  }
+
   renderOptions() {
     const { sharks } = this.props;
+    console.log(sharks);
     return sharks.map((shark, i) =>
       <option
         key={i}
@@ -118,11 +125,12 @@ class App extends Component {
   }
 
   renderInitialSharks() {
+    const { current } = this.state;
+    const { sharks } = this.props;
+    if (sharks.length > 0 && !current) {
 
     const LinkWithContext = withContext(Link, this.context);
 
-    if (this.state.sharks.length > 0 && !this.state.current) {
-      const { sharks } = this.state;
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
@@ -192,7 +200,7 @@ class App extends Component {
   }
 
   render() {
-    const { sharks } = this.props;
+    const { sharks, species } = this.props;
     const { zoom, position, pings, mapLayers, currentLayer } = this.state;
     return (
       <div className="App">
@@ -230,6 +238,10 @@ class App extends Component {
               }
 
         </Map>
+        <SpeciesPanel
+          species={ species }
+          handleClick={ this.handleSharkType.bind(this) }
+        />
       </div>
     );
   }

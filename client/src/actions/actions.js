@@ -5,25 +5,26 @@ export const addSharks = (sharks) => {
   };
 };
 
-export const addPings = (pings) => {
+export const addSpecies = (sharks) => {
   return {
-    type: 'ADD_PINGS',
-    pings
-  };
-};
+    type: 'ADD_SPECIE',
+    species: sharks
+  }
+}
 
 export const fetchSharks = () => {
   return (dispatch) => {
     fetch('/api/v1/sharks')
       .then(response => response.json())
-      .then(sharks => dispatch(addSharks(sharks)));
+      .then(sharks => dispatch(addSharks(sharks)))
+      .then(sharks => dispatch(addSpecies(sharks)));
   };
 };
 
-export const fetchPings = (id) => {
+export const fetchSpecie = (species) => {
   return (dispatch) => {
-    fetch(`/api/v1/sharks/${id}/pings`)
+    fetch(`/api/v1/sharks?species=${species}`)
       .then(response => response.json())
-      .then(pings => dispatch(addPings(pings)));
-  };
-};
+      .then(sharks => dispatch(addSharks(sharks)));
+  }
+}

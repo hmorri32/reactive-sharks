@@ -32,3 +32,15 @@
   font-size: 16px;
   background: url("http://ian.umces.edu/imagelibrary/albums/userpics/12789/normal_ian-symbol-carcharhinus-leucas-1.png") 96%/15% no-repeat white;
   z-index: 10; }
+
+.species-panel {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(70, 70, 70, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  height: 40px;
+  z-index: 5; }
