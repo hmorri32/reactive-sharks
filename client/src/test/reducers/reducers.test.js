@@ -7,6 +7,6 @@ describe('testing these reducers', () => {
     expect(sharks(undefined, {})).toEqual([]);
   });
   it('species should return an empty array as default', () => {
-    expect(sharks(undefined, {})).toEqual([]);
+    expect(species(undefined, {})).toEqual([]);
   });
 });
