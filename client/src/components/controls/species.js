@@ -10,10 +10,11 @@ import tiger from '../../images/tiger.svg';
 import whale from '../../images/whale.svg';
 import ship from '../../images/ship.svg';
 import turtle from '../../images/turtle.svg';
+import star from '../../images/all.svg';
 
 const speciesIcons = [blacktip, blue, bull, turtle, hammerhead, mako, ship, blacktip, tiger, whale, white];
 
-export const SpeciesPanel = ({ species, handleClick }) => {
+export const SpeciesPanel = ({ species, handleClick, resetMap, resetAll }) => {
 
   const renderSpeciesBtns = () => {
     const sortedSpecies = species.sort().map((specie, i) => { return { name: specie, icon: speciesIcons[i] } });
@@ -21,8 +22,9 @@ export const SpeciesPanel = ({ species, handleClick }) => {
     return sortedSpecies.map((specie, i) =>
       <SpecieButton
         key={i}
-        specie ={ specie.name }
-        handleClick= { handleClick }
+        specie={ specie.name }
+        handleClick={ handleClick }
+        resetMap={ resetMap }
         icon={ specie.icon }
       />
     )
@@ -30,6 +32,19 @@ export const SpeciesPanel = ({ species, handleClick }) => {
 
   return (
     <div className='species-panel'>
+      <div className='map-toggle-wrap'>
+        <span className='map-type'>View All</span>
+        <button
+          onClick={ () => resetAll() }
+          className='specie-btn'
+          value='view all'
+        >
+          <img
+            className='shark-icon star' src={ star }
+            onClick={ () => resetAll() }
+            />
+        </button>
+      </div>
       { renderSpeciesBtns() }
     </div>
   )
