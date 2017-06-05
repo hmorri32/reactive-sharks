@@ -29,7 +29,7 @@ function withContext(WrappedComponent, context){
 
   ContextProvider.childContextTypes = {};
   Object.keys(context).forEach(key => {
-    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired; 
+    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired;
   });
 
   return ContextProvider;
@@ -107,7 +107,7 @@ class App extends Component {
   }
 
   handleSharkType(e) {
-    this.props.fetchSpecie(e.target.value);
+    this.props.fetchSpecie(e.target.id);
     this.renderInitialSharks();
   }
 
@@ -134,7 +134,7 @@ class App extends Component {
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <Marker 
+          <Marker
             position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
             key = { shark.id }>
             <Popup keepInView={true}>
@@ -146,8 +146,8 @@ class App extends Component {
                 <p>Gender: { shark.gender }</p>
                 <p>Date: { shark.datetime }</p>
                 <p>Latitude: { ping.latitude }</p>
-                <p>Longitude: { ping.longitude }</p> 
-                <p>Datetime: { ping.datetime }</p>                               
+                <p>Longitude: { ping.longitude }</p>
+                <p>Datetime: { ping.datetime }</p>
                 <LinkWithContext to={{
                   pathname: `/yung-charts/${shark.id}`,
                   sharkData: shark
@@ -170,7 +170,7 @@ class App extends Component {
       return pings.map((ping, i) => {
         while (i < 10 ) {
           return (
-            <Marker 
+            <Marker
               position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
               key = { i }>
               <Popup keepInView={true}>
@@ -182,8 +182,8 @@ class App extends Component {
                   <p>Gender: { current.gender }</p>
                   <p>Date: { current.datetime }</p>
                   <p>Latitude: { ping.latitude }</p>
-                  <p>Longitude: { ping.longitude }</p>                
-                  <p>Datetime: { ping.datetime }</p>                
+                  <p>Longitude: { ping.longitude }</p>
+                  <p>Datetime: { ping.datetime }</p>
                   <LinkWithContext to={{
                     pathname: `/yung-charts/${current.id}`,
                     sharkData: this.state.current
