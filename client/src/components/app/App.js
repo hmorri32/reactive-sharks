@@ -68,12 +68,14 @@ class App extends Component {
     }
   }
 
+  resetMap() {
+    this.setState({ current: '', pings: '', zoom: 2, position: [0, -0] });
+  }
+
   handleChange(e) {
     const { sharks } = this.props;
     if (e.target.value === 'select a shark') {
-      this.setState({ current: '', pings: '', zoom: 2, position: [0, -0]});
-      this.props.fetchSharks();
-      this.renderInitialSharks();
+      this.fetchAllSharks();
     } else {
       this.setState({ current: sharks.find(shark => shark.name === e.target.value) }, this.updateMap);
     }
@@ -88,17 +90,28 @@ class App extends Component {
     });
   }
 
+  handleTrackShark(e) {
+    const { sharks } = this.props;
+    this.setState({ current: sharks.find(shark => shark.name === e.target.id) }, this.updateMap);
+  }
+
+  fetchAllSharks() {
+    this.props.fetchSharks();
+    this.resetMap();
+    this.renderInitialSharks();
+  }
+
   updateMap() {
     const { current } = this.state;
     this.setState({
-      zoom: 6,
+      zoom: 5,
       position: [parseFloat(current.pings[0].latitude), parseFloat(current.pings[0].longitude)]
     }, this.connectTheDots(current.pings));
   }
 
   connectTheDots(data) {
     let c = [];
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < 20; i++) {
       let x = data[i].latitude;
       let y = data[i].longitude;
       c.push([x, y]);
@@ -144,14 +157,20 @@ class App extends Component {
                 <p>Weight: { shark.weight }</p>
                 <p>Gender: { shark.gender }</p>
                 <p>Latitude: { ping.latitude }</p>
-                <p>Longitude: { ping.longitude }</p> 
-                <p>Date: { ping.datetime }</p>                               
+                <p>Longitude: { ping.longitude }</p>
+                <p>Date: { ping.datetime }</p>
                 <LinkWithContext to={{
                   pathname: `/yung-charts/${shark.id}`,
                   sharkData: shark
                 }}>
                   <h2>{shark.name} detail</h2>
                 </LinkWithContext>
+                <button
+                  id={ shark.name }
+                  onClick={ (e) => this.handleTrackShark(e) }
+                >
+                Track Shark
+                </button>
               </div>
             </Popup>
           </Marker>
@@ -164,9 +183,9 @@ class App extends Component {
     const { current } = this.state;
     if (current) {
       const LinkWithContext = withContext(Link, this.context);
-      const pings = current.pings.slice(0, 10).reverse();
+      const pings = current.pings.slice(0, 20);
       return pings.map((ping, i) => {
-        while (i < 10 ) {
+        while (i < 20 ) {
           return (
             <Marker
               position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
@@ -179,14 +198,17 @@ class App extends Component {
                   <p>Weight: { current.weight }</p>
                   <p>Gender: { current.gender }</p>
                   <p>Latitude: { ping.latitude }</p>
-                  <p>Longitude: { ping.longitude }</p>                
-                  <p>Date: { ping.datetime }</p>                
+                  <p>Longitude: { ping.longitude }</p>
+                  <p>Date: { ping.datetime }</p>
                   <LinkWithContext to={{
                     pathname: `/yung-charts/${current.id}`,
                     sharkData: this.state.current
                   }}>
                     <h2>{current.name} detail</h2>
                   </LinkWithContext>
+                  <button onClick={ () => this.resetMap() }>
+                    View All Sharks
+                  </button>
                 </div>
               </Popup>
             </Marker>
@@ -205,7 +227,6 @@ class App extends Component {
           <option value='select a shark'>Select a shark</option>
           { this.renderOptions() }
         </select>
-        {this.currentShark && <div>this.currentShark.name</div>}
         <ControlPanel
           history = {this.props.history}
           router = {this.props.router}
@@ -238,6 +259,8 @@ class App extends Component {
         <SpeciesPanel
           species={ species }
           handleClick={ this.handleSharkType.bind(this) }
+          resetMap={ this.resetMap.bind(this) }
+          resetAll={ this.fetchAllSharks.bind(this) }
         />
       </div>
     );
