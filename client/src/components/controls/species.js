@@ -11,7 +11,7 @@ import whale from '../../images/whale.svg';
 import ship from '../../images/ship.svg';
 import turtle from '../../images/turtle.svg';
 
-const speciesIcons = [white, tiger, mako, blue, ship, blacktip, hammerhead, bull, blacktip, turtle, whale];
+const speciesIcons = [white, hammerhead, tiger, bull, mako, blue, ship, blacktip, blacktip, turtle, whale];
 
 export const SpeciesPanel = ({ species, handleClick }) => {
 
