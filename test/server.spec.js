@@ -35,7 +35,7 @@ describe('server side testing', () => {
       chai.request(server)
       .get('/')
       .end((error, response) => {
-        response.should.have.status(200)
+        response.should.have.status(200);
         response.text.should.equal('<!DOCTYPE html><html><head><title>Express</title></head><body><h1>Express</h1><p>Welcome to Express</p></body></html>');
         done();
       });
@@ -88,7 +88,7 @@ describe('server side testing', () => {
         .get('/api/v1/sharks?species=Great')
         .end((error, response) => {
           const steve = response.body[0];
-          
+
           response.should.have.status(200);
           response.should.be.json;
           response.body.should.be.a('array');
@@ -98,7 +98,18 @@ describe('server side testing', () => {
           steve.name.should.equal('steve zissou');
 
           done();
-        })
+        });
+      });
+
+      it('shuld chuck an error if passed bogus query data', (done) => {
+        chai.request(server)
+        .get('/api/v1/sharks?species=ultra cool shark')
+        .end((error, response) => {
+          response.should.have.status(500);
+          response.should.be.html;
+          response.text.should.equal('<!DOCTYPE html><html><head><title></title></head><body><h1>/Users/hugh/Turing/mod-4/reactive-sharks/views/error.jade:5\n    3| block content\n    4|   h1= message\n  &gt; 5|   h2= error.status\n    6|   pre #{error.stack}\n    7| \n\nCannot read property \'status\' of undefined</h1><h2></h2><pre></pre></body></html>');
+          done();
+        });
       });
     });
   });
