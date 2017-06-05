@@ -13,6 +13,9 @@ exports.up = function(knex, Promise) {
       table.string('tagLocation');
       table.string('description', 8000);
       table.json('pings');
+      table.string('dist_24_hours');
+      table.string('dist_72_hours');
+      table.string('dist_total');
       table.string('profile_url');
       table.timestamps(true, true);
     })

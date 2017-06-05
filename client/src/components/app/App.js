@@ -113,7 +113,6 @@ class App extends Component {
 
   renderOptions() {
     const { sharks } = this.props;
-    console.log(sharks);
     return sharks.map((shark, i) =>
       <option
         key={i}

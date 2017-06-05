@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppContainer         from '../../containers/AppContainer';
 import RC2                  from 'react-chartjs2';
 import * as helpers         from '../../helpers/fetch.js';
+import './SharkDetail.css';
 
 class SharkDetail extends Component {
   constructor() {
@@ -69,10 +70,9 @@ class SharkDetail extends Component {
           }
         }]
       }
-    }
+    };
   }
   
-
   filterArray(arr) {
     let index = -1,
       arr_length = arr ? arr.length : 0,
@@ -94,7 +94,7 @@ class SharkDetail extends Component {
 
     if(sharks.length) {
       let sharkNames    = sharks.map(shark => shark.name);
-      const sharkWeight = sharks.map(shark => parseInt(shark.weight));
+      const sharkWeight = sharks.map(shark => parseFloat(shark.weight));
 
       const data = {
         labels: sharkNames,
@@ -110,7 +110,8 @@ class SharkDetail extends Component {
       };
 
       return (
-        <div>
+        <div className='chart-container'>
+          <h1>All Sharks Weights Compared</h1>
           <RC2 
             data={data} 
             options={this.gridLineOptions()}
@@ -121,10 +122,80 @@ class SharkDetail extends Component {
     }
   } 
 
+  buildPingChart() {
+    const { currentShark } = this.state;
+    let weight = currentShark.weight;
+    let length = currentShark.length;
+    const lat  = currentShark.pings.map(pings => parseFloat(pings.latitude));
+    const long = currentShark.pings.map(pings => parseFloat(pings.longitude));
+    const date = currentShark.pings.map(pings => pings.datetime);
+
+    const data = {
+      labels: date.reverse(),
+      datasets:[
+        {
+          label: 'latitude',
+          type: 'line',
+          fill: false,
+          showLine: false,
+          borderColor: 'rgb(34, 49, 63)',
+          pointBorderColor: 'rgb(34, 49, 63)',
+          pointBackgroundColor: '#fff',
+          pointHoverBackgroundColor: 'rgb(34, 49, 63)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointRadius: 2,
+          pointHitRadius: 2,
+          data: lat.reverse(),
+        },
+        {
+          label: 'longitude',
+          backgroundColor: '#52B3D9',
+          borderColor: '#52B3D9',
+          borderWidth: 1,
+          fill: false,
+          showLine: false,
+          hoverBackgroundColor: '#C5EFF7',
+          hoverBorderColor: '#52B3D9',
+          data: long.reverse()
+        }
+      ]
+    };
+
+    return(
+     <div className='chart-container'>
+      <h1>Latitude/Longitude Over Time</h1>
+      <RC2 
+        // options={this.gridLineOptions()}
+        data={data}
+        type='line' 
+      />
+     </div>
+    )
+  }
+
+  renderSharkDetail() {
+    const { currentShark } = this.state;
+    const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total } = currentShark;
+    return(
+      <div className='detail-div'>
+        <h1>All About {name}</h1>
+        <p>Species: {species}</p>
+        <p>Gender: {gender}</p>
+        <p>Stage of Life: {stageOfLife}</p>
+        <p>Length: {length}</p>
+        <p>Weight: {weight}</p>
+        <p>Tag Location: {tagLocation}</p>
+        <p>Distance Traveled: {dist_total} miles</p>
+      </div>
+    );
+  }
+
   render() {
     return(
-      <div>CARNE A SUH DUDE
-        {this.buildWeightChart()}
+      <div className='shark-detail-container'>
+        {this.state.currentShark && this.renderSharkDetail()}
+        {this.state.currentShark && this.buildPingChart()}
+        {this.state.sharks && this.state.currentShark && this.buildWeightChart()}
       </div>
     );
   }
