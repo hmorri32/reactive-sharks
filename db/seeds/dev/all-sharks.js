@@ -1,5 +1,5 @@
 const sharkData = require('../../../sharkData2.json');
-const flat = [].concat.apply([], sharkData)''
+const flat = [].concat.apply([], sharkData);
 
 
 exports.seed = function(knex, Promise) {
@@ -18,6 +18,9 @@ exports.seed = function(knex, Promise) {
         tagLocation: shark.tagLocation,
         description: shark.description,
         pings: JSON.stringify(shark.pings),
+        dist_24_hours: shark.dist_24_hours,
+        dist_72_hours: shark.dist_72_hours,
+        dist_total: shark.dist_total,
         profile_url: shark.profile_url
       }
     );

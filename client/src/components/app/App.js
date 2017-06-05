@@ -113,7 +113,6 @@ class App extends Component {
 
   renderOptions() {
     const { sharks } = this.props;
-    console.log(sharks);
     return sharks.map((shark, i) =>
       <option
         key={i}
@@ -144,10 +143,9 @@ class App extends Component {
                 <p>Length: { shark.length }</p>
                 <p>Weight: { shark.weight }</p>
                 <p>Gender: { shark.gender }</p>
-                <p>Date: { shark.datetime }</p>
                 <p>Latitude: { ping.latitude }</p>
-                <p>Longitude: { ping.longitude }</p>
-                <p>Datetime: { ping.datetime }</p>
+                <p>Longitude: { ping.longitude }</p> 
+                <p>Date: { ping.datetime }</p>                               
                 <LinkWithContext to={{
                   pathname: `/yung-charts/${shark.id}`,
                   sharkData: shark
@@ -180,10 +178,9 @@ class App extends Component {
                   <p>Length: { current.length }</p>
                   <p>Weight: { current.weight }</p>
                   <p>Gender: { current.gender }</p>
-                  <p>Date: { current.datetime }</p>
                   <p>Latitude: { ping.latitude }</p>
-                  <p>Longitude: { ping.longitude }</p>
-                  <p>Datetime: { ping.datetime }</p>
+                  <p>Longitude: { ping.longitude }</p>                
+                  <p>Date: { ping.datetime }</p>                
                   <LinkWithContext to={{
                     pathname: `/yung-charts/${current.id}`,
                     sharkData: this.state.current
