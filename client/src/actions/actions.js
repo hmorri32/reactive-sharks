@@ -9,8 +9,8 @@ export const addSpecies = (sharks) => {
   return {
     type: 'ADD_SPECIE',
     species: sharks
-  }
-}
+  };
+};
 
 export const fetchSharks = () => {
   return (dispatch) => {
@@ -26,5 +26,5 @@ export const fetchSpecie = (species) => {
     fetch(`/api/v1/sharks?species=${species}`)
       .then(response => response.json())
       .then(sharks => dispatch(addSharks(sharks)));
-  }
-}
+  };
+};
