@@ -11,14 +11,14 @@ import whale from '../../images/whale.svg';
 import ship from '../../images/ship.svg';
 import turtle from '../../images/turtle.svg';
 
-const speciesIcons = [white, tiger, mako, blue, ship, blacktip, hammerhead, bull, blacktip, turtle, whale];
+const speciesIcons = [blacktip, blue, bull, turtle, hammerhead, mako, ship, blacktip, tiger, whale, white];
 
 export const SpeciesPanel = ({ species, handleClick }) => {
 
   const renderSpeciesBtns = () => {
-    species = species.map((specie, i) => { return { name: specie, icon: speciesIcons[i] } });
-    console.log(species);
-    return species.map((specie, i) =>
+    const sortedSpecies = species.sort().map((specie, i) => { return { name: specie, icon: speciesIcons[i] } });
+    console.log(sortedSpecies);
+    return sortedSpecies.map((specie, i) =>
       <SpecieButton
         key={i}
         specie ={ specie.name }
