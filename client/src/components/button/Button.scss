@@ -13,7 +13,7 @@
 
 .map-toggle-wrap:hover .map-type {
   position: absolute;
-  left: -220%;
+  left: -268%;
   display: block;
 }
 
@@ -25,7 +25,7 @@
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, .35);
   color: #fff;
   font-size: .9em;
-  width: 70px;
+  width: 90px;
   &:after {
   content:"";
   position: absolute;
@@ -63,4 +63,21 @@
   width: 25px;
   margin: 0 auto;
   cursor: pointer;
+}
+
+.shark-icon {
+  display: block;
+  margin: 0 auto;
+  width: 30px;
+}
+
+.specie-btn {
+  display: block;
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  margin: 0 auto;
+  height: 40px;
+  width: 40px;
+  outline: none;
 }
