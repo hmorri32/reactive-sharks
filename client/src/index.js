@@ -13,7 +13,7 @@ import logger              from 'redux-logger';
 
 import { root }      from './reducers/rootReducer';
 import App           from './components/app/App.js';
-import SharkDetail   from './components/charts/Charts.js';
+import SharkDetail   from './components/sharkDetail/SharkDetail.js';
 
 import 'leaflet/dist/leaflet.css';
 import './index.css';
