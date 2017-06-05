@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppContainer         from '../../containers/AppContainer';
 import RC2                  from 'react-chartjs2';
 import * as helpers         from '../../helpers/fetch.js';
+import './SharkDetail.css';
 
 class SharkDetail extends Component {
   constructor() {
@@ -93,7 +94,7 @@ class SharkDetail extends Component {
 
     if(sharks.length) {
       let sharkNames    = sharks.map(shark => shark.name);
-      const sharkWeight = sharks.map(shark => parseInt(shark.weight));
+      const sharkWeight = sharks.map(shark => parseFloat(shark.weight));
 
       const data = {
         labels: sharkNames,
@@ -109,7 +110,8 @@ class SharkDetail extends Component {
       };
 
       return (
-        <div>
+        <div className='chart-container'>
+          <h1>All Sharks Weights Compared</h1>
           <RC2 
             data={data} 
             options={this.gridLineOptions()}
@@ -132,17 +134,6 @@ class SharkDetail extends Component {
       labels: date.reverse(),
       datasets:[
         {
-          label: 'longitude',
-          backgroundColor: '#52B3D9',
-          borderColor: '#52B3D9',
-          borderWidth: 1,
-          fill: false,
-          showLine: false,
-          hoverBackgroundColor: '#C5EFF7',
-          hoverBorderColor: '#52B3D9',
-          data: long.reverse()
-        },
-        {
           label: 'latitude',
           type: 'line',
           fill: false,
@@ -155,12 +146,23 @@ class SharkDetail extends Component {
           pointRadius: 2,
           pointHitRadius: 2,
           data: lat.reverse(),
+        },
+        {
+          label: 'longitude',
+          backgroundColor: '#52B3D9',
+          borderColor: '#52B3D9',
+          borderWidth: 1,
+          fill: false,
+          showLine: false,
+          hoverBackgroundColor: '#C5EFF7',
+          hoverBorderColor: '#52B3D9',
+          data: long.reverse()
         }
       ]
     };
 
     return(
-     <div>
+     <div className='chart-container'>
       <h1>Latitude/Longitude Over Time</h1>
       <RC2 
         // options={this.gridLineOptions()}
@@ -175,7 +177,7 @@ class SharkDetail extends Component {
     const { currentShark } = this.state;
     const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total } = currentShark;
     return(
-      <div>
+      <div className='detail-div'>
         <h1>All About {name}</h1>
         <p>Species: {species}</p>
         <p>Gender: {gender}</p>
@@ -190,9 +192,10 @@ class SharkDetail extends Component {
 
   render() {
     return(
-      <div>
+      <div className='shark-detail-container'>
         {this.state.currentShark && this.renderSharkDetail()}
         {this.state.currentShark && this.buildPingChart()}
+        {this.state.sharks && this.state.currentShark && this.buildWeightChart()}
       </div>
     );
   }
