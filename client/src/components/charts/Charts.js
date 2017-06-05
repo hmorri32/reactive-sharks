@@ -69,10 +69,9 @@ class SharkDetail extends Component {
           }
         }]
       }
-    }
+    };
   }
   
-
   filterArray(arr) {
     let index = -1,
       arr_length = arr ? arr.length : 0,
@@ -121,10 +120,15 @@ class SharkDetail extends Component {
     }
   } 
 
+  buildThisSharksChart() {
+    const { currentShark } = this.state;
+        
+  }
+
   render() {
     return(
       <div>CARNE A SUH DUDE
-        {this.buildWeightChart()}
+        {this.state.currentShark && this.buildThisSharksChart()}
       </div>
     );
   }
