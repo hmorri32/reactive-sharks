@@ -120,15 +120,79 @@ class SharkDetail extends Component {
     }
   } 
 
-  buildThisSharksChart() {
+  buildPingChart() {
     const { currentShark } = this.state;
-        
+    let weight = currentShark.weight;
+    let length = currentShark.length;
+    const lat  = currentShark.pings.map(pings => parseFloat(pings.latitude));
+    const long = currentShark.pings.map(pings => parseFloat(pings.longitude));
+    const date = currentShark.pings.map(pings => pings.datetime);
+
+    const data = {
+      labels: date.reverse(),
+      datasets:[
+        {
+          label: 'longitude',
+          backgroundColor: '#52B3D9',
+          borderColor: '#52B3D9',
+          borderWidth: 1,
+          fill: false,
+          showLine: false,
+          hoverBackgroundColor: '#C5EFF7',
+          hoverBorderColor: '#52B3D9',
+          data: long.reverse()
+        },
+        {
+          label: 'latitude',
+          type: 'line',
+          fill: false,
+          showLine: false,
+          borderColor: 'rgb(34, 49, 63)',
+          pointBorderColor: 'rgb(34, 49, 63)',
+          pointBackgroundColor: '#fff',
+          pointHoverBackgroundColor: 'rgb(34, 49, 63)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointRadius: 2,
+          pointHitRadius: 2,
+          data: lat.reverse(),
+        }
+      ]
+    };
+
+    return(
+     <div>
+      <h1>Latitude/Longitude Over Time</h1>
+      <RC2 
+        // options={this.gridLineOptions()}
+        data={data}
+        type='line' 
+      />
+     </div>
+    )
+  }
+
+  renderSharkDetail() {
+    const { currentShark } = this.state;
+    const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total } = currentShark;
+    return(
+      <div>
+        <h1>All About {name}</h1>
+        <p>Species: {species}</p>
+        <p>Gender: {gender}</p>
+        <p>Stage of Life: {stageOfLife}</p>
+        <p>Length: {length}</p>
+        <p>Weight: {weight}</p>
+        <p>Tag Location: {tagLocation}</p>
+        <p>Distance Traveled: {dist_total} miles</p>
+      </div>
+    );
   }
 
   render() {
     return(
-      <div>CARNE A SUH DUDE
-        {this.state.currentShark && this.buildThisSharksChart()}
+      <div>
+        {this.state.currentShark && this.renderSharkDetail()}
+        {this.state.currentShark && this.buildPingChart()}
       </div>
     );
   }
