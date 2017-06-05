@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const index        = require('./routes/index');
 const users        = require('./routes/users');
-const app          = express();
+const app          = module.exports = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
