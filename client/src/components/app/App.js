@@ -29,7 +29,7 @@ function withContext(WrappedComponent, context){
 
   ContextProvider.childContextTypes = {};
   Object.keys(context).forEach(key => {
-    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired; 
+    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired;
   });
 
   return ContextProvider;
@@ -107,7 +107,7 @@ class App extends Component {
   }
 
   handleSharkType(e) {
-    this.props.fetchSpecie(e.target.value);
+    this.props.fetchSpecie(e.target.id);
     this.renderInitialSharks();
   }
 
@@ -133,7 +133,7 @@ class App extends Component {
       return sharks.map((shark) => {
         const ping = shark.pings[0];
         return (
-          <Marker 
+          <Marker
             position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
             key = { shark.id }>
             <Popup keepInView={true}>
@@ -168,7 +168,7 @@ class App extends Component {
       return pings.map((ping, i) => {
         while (i < 10 ) {
           return (
-            <Marker 
+            <Marker
               position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
               key = { i }>
               <Popup keepInView={true}>

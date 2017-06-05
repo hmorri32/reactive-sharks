@@ -8,7 +8,8 @@
   width: 40px;
   z-index: 2; }
 
-.controls .map-toggle-wrap:last-child {
+.controls .map-toggle-wrap:last-child,
+.species-panel .map-toggle-wrap:last-child {
   margin-bottom: 0; }
 
 .menu-btn {
@@ -38,14 +39,17 @@
 
 .species-panel {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  right: 10px;
+  top: 350px;
   background-color: rgba(70, 70, 70, 0.5);
   border: 2px solid rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
-  height: 40px;
+  width: 40px;
   z-index: 5; }
 
 .map-toggle-wrap {
@@ -61,7 +65,7 @@
 
 .map-toggle-wrap:hover .map-type {
   position: absolute;
-  left: -220%;
+  left: -268%;
   display: block; }
 
 .map-type {
@@ -72,7 +76,7 @@
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.35);
   color: #fff;
   font-size: .9em;
-  width: 70px; }
+  width: 90px; }
   .map-type:after {
     content: "";
     position: absolute;
@@ -107,6 +111,21 @@
   width: 25px;
   margin: 0 auto;
   cursor: pointer; }
+
+.shark-icon {
+  display: block;
+  margin: 0 auto;
+  width: 30px; }
+
+.specie-btn {
+  display: block;
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  margin: 0 auto;
+  height: 40px;
+  width: 40px;
+  outline: none; }
 
 .App {
   text-align: center; }

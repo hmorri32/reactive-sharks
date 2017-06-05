@@ -8,7 +8,8 @@
   width: 40px;
   z-index: 2; }
 
-.controls .map-toggle-wrap:last-child {
+.controls .map-toggle-wrap:last-child,
+.species-panel .map-toggle-wrap:last-child {
   margin-bottom: 0; }
 
 .menu-btn {
@@ -38,12 +39,15 @@
 
 .species-panel {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  right: 10px;
+  top: 350px;
   background-color: rgba(70, 70, 70, 0.5);
   border: 2px solid rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
-  height: 40px;
+  width: 40px;
   z-index: 5; }
