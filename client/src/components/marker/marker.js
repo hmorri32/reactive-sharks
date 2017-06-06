@@ -22,7 +22,7 @@ class SharkMarker extends Component {
 
   render() {
     const LinkWithContext  = withContext(Link, this.context)
-    const { shark, pings } = this.props;
+    const { shark, pings, resetMap, handleTrackShark, zoom } = this.props;
     return (
       <Marker
         position={
@@ -42,12 +42,14 @@ class SharkMarker extends Component {
                 <span>Shark Details</span>
               </button>
             </LinkWithContext>
-            <button
-              id={ shark.name }
-              onClick={ (e) => this.props.handleTrackShark(e) }
-            >
-              Track Shark
-            </button>
+             {zoom === 2 
+              ? <button
+                  id={ shark.name }
+                  onClick={(e) => handleTrackShark(e)}>
+                  Track Shark
+                </button>
+              : <button onClick={() => resetMap()}>All Sharks</button>
+            }
           </div>
         </Popup>
       </Marker>
