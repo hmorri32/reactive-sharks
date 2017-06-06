@@ -29,7 +29,7 @@ class SharkMarker extends Component {
         </div>
      </Popup>
     </Marker>
-    )
+    );
   }
 }
 
