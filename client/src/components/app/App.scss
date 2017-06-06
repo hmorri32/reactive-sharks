@@ -72,9 +72,7 @@
     cursor: pointer;
     font-weight: bold;
     letter-spacing: 1.1pt;
-    span {
-      text-shadow: -1px 0px 1px rgba(0, 0, 0, 0.1);
-    }
+    text-shadow: -1px 0px 1px rgba(0, 0, 0, 0.1);
   }
   button:hover {
     background-color: #2e79ac;

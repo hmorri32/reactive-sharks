@@ -172,7 +172,7 @@ class App extends Component {
                   id={ shark.name }
                   onClick={ (e) => this.handleTrackShark(e) }
                 >
-                  <span>Track Shark</span>
+                  Track Shark
                 </button>
               </div>
             </Popup>
@@ -207,7 +207,7 @@ class App extends Component {
                     <button><span>Shark Details</span></button>
                   </LinkWithContext>
                   <button onClick={ () => this.resetMap() }>
-                    <span>Back</span>
+                    Back
                   </button>
                 </div>
               </Popup>
