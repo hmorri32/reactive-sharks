@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
 
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use('/', index);
