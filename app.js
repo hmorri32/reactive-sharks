@@ -8,8 +8,6 @@ const index        = require('./routes/index');
 const users        = require('./routes/users');
 const app          = module.exports = express();
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
 
 app.set('port', process.env.PORT || 3001);
 
@@ -19,6 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use('/', index);
 
