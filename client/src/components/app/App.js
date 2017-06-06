@@ -48,6 +48,10 @@ class App extends Component {
       currentLayer: 'World_Imagery/MapServer/',
       current: '',
       position: [0, -0.00],
+      maxBounds:[
+        [180, -180],
+        [-180, 180]
+      ],
       zoom: 2,
       pings: '',
       sharks: '',
@@ -149,27 +153,26 @@ class App extends Component {
           <Marker
             position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
             key = { shark.id }>
-            <Popup keepInView={true}>
-              <div>
-                <h3>Name: { shark.name }</h3>
+            <Popup keepInView={true} className='custom-popup'>
+              <div className='shark-data'>
+                <h3>{ shark.name }</h3>
                 <p>Species: { shark.species }</p>
                 <p>Length: { shark.length }</p>
                 <p>Weight: { shark.weight }</p>
-                <p>Gender: { shark.gender }</p>
-                <p>Latitude: { ping.latitude }</p>
-                <p>Longitude: { ping.longitude }</p>
                 <p>Date: { ping.datetime }</p>
                 <LinkWithContext to={{
                   pathname: `/yung-charts/${shark.id}`,
                   sharkData: shark
                 }}>
-                  <h2>{shark.name} detail</h2>
+                  <button className='popup-btn'>
+                    <span>Shark Details</span>
+                  </button>
                 </LinkWithContext>
                 <button
                   id={ shark.name }
                   onClick={ (e) => this.handleTrackShark(e) }
                 >
-                Track Shark
+                  <span>Track Shark</span>
                 </button>
               </div>
             </Popup>
@@ -190,24 +193,21 @@ class App extends Component {
             <Marker
               position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
               key = { i }>
-              <Popup keepInView={true}>
-                <div>
-                  <h3>Name: { current.name }</h3>
+              <Popup keepInView={true} className='custom-popup'>
+                <div className='shark-data'>
+                  <h3>{ current.name }</h3>
                   <p>Species: { current.species }</p>
                   <p>Length: { current.length }</p>
                   <p>Weight: { current.weight }</p>
-                  <p>Gender: { current.gender }</p>
-                  <p>Latitude: { ping.latitude }</p>
-                  <p>Longitude: { ping.longitude }</p>
                   <p>Date: { ping.datetime }</p>
                   <LinkWithContext to={{
                     pathname: `/yung-charts/${current.id}`,
                     sharkData: this.state.current
                   }}>
-                    <h2>{current.name} detail</h2>
+                    <button><span>Shark Details</span></button>
                   </LinkWithContext>
                   <button onClick={ () => this.resetMap() }>
-                    View All Sharks
+                    <span>Back</span>
                   </button>
                 </div>
               </Popup>
@@ -220,7 +220,7 @@ class App extends Component {
 
   render() {
     const { sharks, species } = this.props;
-    const { zoom, position, pings, mapLayers, currentLayer } = this.state;
+    const { zoom, position, pings, mapLayers, currentLayer, maxBounds } = this.state;
     return (
       <div className="App">
         <select className='shark-select' onChange={ (e) => this.handleChange(e) }>
@@ -236,11 +236,14 @@ class App extends Component {
           handleClick={ this.handleClick.bind(this) }
         />
         <Map
+          updateWhenZooming={ false }
+          minZoom={ 2 }
           animate={ true }
           useFlyTo={ true }
           ref={ (input) => this.map = input }
           center={ position }
           zoom={ zoom }
+          maxBounds={ maxBounds }
         >
           <TileLayer
             url={`http://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
