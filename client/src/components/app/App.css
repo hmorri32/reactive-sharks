@@ -25,6 +25,7 @@
   width: 200px;
   height: 34px;
   margin: 0 auto;
+  padding: 0 0 0 5px;
   display: block;
   border-radius: 5px;
   background-color: #578cb8;
@@ -133,26 +134,8 @@
   display: block; }
 
 .App {
+  font-size: 16px;
   text-align: center; }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px; }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white; }
-
-.App-intro {
-  font-size: large; }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg); }
-  to {
-    transform: rotate(360deg); } }
 
 .leaflet-container {
   height: 100vh;
@@ -186,3 +169,34 @@
   position: absolute;
   top: 41px;
   left: 5px; }
+
+.leaflet-popup-content-wrapper {
+  border-radius: 3px !important;
+  width: 295px; }
+
+.shark-data h3 {
+  color: #4798d0;
+  font-size: 16px;
+  text-shadow: -1px 0px 1px rgba(0, 0, 0, 0.2); }
+
+.shark-data p {
+  margin: 10px 0 !important; }
+
+.shark-data button {
+  display: inline-block;
+  margin: 5px 10px 5px 0;
+  padding: 8px 10px;
+  width: 45%;
+  background-color: #4798d0;
+  border-style: none;
+  border-radius: 2px;
+  box-shadow: -1px 0px 1px rgba(0, 0, 0, 0.35);
+  color: #f8f8f8;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1.1pt; }
+  .shark-data button span {
+    text-shadow: -1px 0px 1px rgba(0, 0, 0, 0.1); }
+
+.shark-data button:hover {
+  background-color: #2e79ac; }

@@ -72,7 +72,7 @@ class SharkDetail extends Component {
       }
     };
   }
-  
+
   filterArray(arr) {
     let index = -1,
       arr_length = arr ? arr.length : 0,
@@ -112,15 +112,15 @@ class SharkDetail extends Component {
       return (
         <div className='chart-container'>
           <h1>All Sharks Weights Compared</h1>
-          <RC2 
-            data={data} 
+          <RC2
+            data={data}
             options={this.gridLineOptions()}
-            type='bar' 
+            type='bar'
             />
         </div>
       );
     }
-  } 
+  }
 
   buildPingChart() {
     const { currentShark } = this.state;
@@ -164,10 +164,10 @@ class SharkDetail extends Component {
     return(
      <div className='chart-container'>
       <h1>Latitude/Longitude Over Time</h1>
-      <RC2 
-        // options={this.gridLineOptions()}
+      <RC2
+        options={this.gridLineOptions()}
         data={data}
-        type='line' 
+        type='line'
       />
      </div>
     )
@@ -175,7 +175,7 @@ class SharkDetail extends Component {
 
   renderSharkDetail() {
     const { currentShark } = this.state;
-    const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total } = currentShark;
+    const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total, description } = currentShark;
     return(
       <div className='detail-div'>
         <h1>All About {name}</h1>
@@ -186,6 +186,7 @@ class SharkDetail extends Component {
         <p>Weight: {weight}</p>
         <p>Tag Location: {tagLocation}</p>
         <p>Distance Traveled: {dist_total} miles</p>
+        <p>Description: {description}</p>
       </div>
     );
   }
