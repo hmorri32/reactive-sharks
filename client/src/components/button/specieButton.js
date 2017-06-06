@@ -21,5 +21,3 @@ export const SpecieButton = ({ specie, handleClick, icon, resetMap }) => {
     </div>
   )
 }
-
-// { specie }

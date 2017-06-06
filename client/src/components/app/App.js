@@ -38,10 +38,6 @@ class App extends Component {
     };
   }
 
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  }
-
   componentWillMount() {
     this.props.fetchSharks();
   }
@@ -125,7 +121,7 @@ class App extends Component {
     if (sharks.length > 0 && !current) {
       return sharks.map((shark, i) => {
         const pings = shark.pings[0];
-        return ( 
+        return (
           <SharkMarker
             zoom={this.state.zoom}
             resetMap={() => this.resetMap()}
