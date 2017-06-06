@@ -6,6 +6,10 @@ const database      = require('knex')(configuration);
 const error         = require('../helpers/serverErrors');
 const path          = require('path');
 
+router.get('/', function(request, response) {
+  response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
+});
+
 router.get('/api/v1/sharks', (request, response) => {
   const { species } = request.query;
 
@@ -23,8 +27,5 @@ router.get('/api/v1/sharks', (request, response) => {
   }
 });
 
-router.get('*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
 
 module.exports = router;
