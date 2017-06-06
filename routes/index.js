@@ -4,10 +4,7 @@ const environment   = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile.js')[environment];
 const database      = require('knex')(configuration);
 const error         = require('../helpers/serverErrors');
-
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
-});
+const path          = require('path');
 
 router.get('/api/v1/sharks', (request, response) => {
   const { species } = request.query;
@@ -24,6 +21,10 @@ router.get('/api/v1/sharks', (request, response) => {
         : error.queryArrayLength(request, response);
     });
   }
+});
+
+router.get('*', function(request, response) {
+  response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 module.exports = router;
