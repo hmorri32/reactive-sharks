@@ -15,26 +15,6 @@ import { Marker, Popup }            from 'react-leaflet';
 
 import './App.css';
 
-function withContext(WrappedComponent, context){
-
-  class ContextProvider extends React.Component {
-    getChildContext() {
-      return context;
-    }
-
-    render() {
-      return <WrappedComponent {...this.props} />
-    }
-  }
-
-  ContextProvider.childContextTypes = {};
-  Object.keys(context).forEach(key => {
-    ContextProvider.childContextTypes[key] = React.PropTypes.any.isRequired;
-  });
-
-  return ContextProvider;
-}
-
 class App extends Component {
   constructor() {
     super();
@@ -133,8 +113,7 @@ class App extends Component {
     return sharks.map((shark, i) =>
       <option
         key={i}
-        value={ shark.name }
-      >
+        value={ shark.name }>
         { shark.name }
       </option>
     );
@@ -144,39 +123,15 @@ class App extends Component {
     const { current } = this.state;
     const { sharks } = this.props;
     if (sharks.length > 0 && !current) {
-
-    const LinkWithContext = withContext(Link, this.context);
-
-      return sharks.map((shark) => {
-        const ping = shark.pings[0];
-        return (
-          <Marker
-            position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
-            key = { shark.id }>
-            <Popup keepInView={true} className='custom-popup'>
-              <div className='shark-data'>
-                <h3>{ shark.name }</h3>
-                <p>Species: { shark.species }</p>
-                <p>Length: { shark.length }</p>
-                <p>Weight: { shark.weight }</p>
-                <p>Date: { ping.datetime }</p>
-                <LinkWithContext to={{
-                  pathname: `/yung-charts/${shark.id}`,
-                  sharkData: shark
-                }}>
-                  <button className='popup-btn'>
-                    <span>Shark Details</span>
-                  </button>
-                </LinkWithContext>
-                <button
-                  id={ shark.name }
-                  onClick={ (e) => this.handleTrackShark(e) }
-                >
-                  Track Shark
-                </button>
-              </div>
-            </Popup>
-          </Marker>
+      return sharks.map((shark, i) => {
+        const pings = shark.pings[0];
+        return ( 
+          <SharkMarker
+            handleTrackShark={(e) => this.handleTrackShark(e)}
+            key={ i }
+            shark={shark}
+            pings={pings}
+         />
         );
       });
     }
@@ -185,33 +140,16 @@ class App extends Component {
   renderPings() {
     const { current } = this.state;
     if (current) {
-      const LinkWithContext = withContext(Link, this.context);
       const pings = current.pings.slice(0, 20);
       return pings.map((ping, i) => {
         while (i < 20 ) {
           return (
-            <Marker
-              position={[parseFloat(ping.latitude), parseFloat(ping.longitude)]}
-              key = { i }>
-              <Popup keepInView={true} className='custom-popup'>
-                <div className='shark-data'>
-                  <h3>{ current.name }</h3>
-                  <p>Species: { current.species }</p>
-                  <p>Length: { current.length }</p>
-                  <p>Weight: { current.weight }</p>
-                  <p>Date: { ping.datetime }</p>
-                  <LinkWithContext to={{
-                    pathname: `/yung-charts/${current.id}`,
-                    sharkData: this.state.current
-                  }}>
-                    <button><span>Shark Details</span></button>
-                  </LinkWithContext>
-                  <button onClick={ () => this.resetMap() }>
-                    Back
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
+            <SharkMarker
+              handleTrackShark={(e) => this.handleTrackShark(e)}
+              key={ i }
+              shark={current}
+              pings={ping}
+            />
           );
         }
       });

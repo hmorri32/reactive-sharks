@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Marker, Popup }    from 'react-leaflet';
 import L                    from 'leaflet';
 import AppContainer         from '../../containers/AppContainer';
+import { Link }             from 'react-router-dom';
+import { withContext }      from '../contextProvider/ContextProvider'
 
 L.Icon.Default.imagePath = '.';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,25 +15,51 @@ L.Icon.Default.mergeOptions({
 });
 
 class SharkMarker extends Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
+  }
+
   render() {
+    const LinkWithContext  = withContext(Link, this.context)
+    const { shark, pings } = this.props;
     return (
-    <Marker position={[this.props.lat, this.props.lng]}>
-      <Popup keepInView={ true }>
-        <div>
-          <h3>Name: { this.props.name }</h3>
-          <p>Species: { this.props.species }</p>
-          <p>Length: { this.props.length }</p>
-          <p>Weight: { this.props.weight }</p>
-          <p>Gender: { this.props.gender }</p>
-          <p>Date: { this.props.datetime }</p>
-          <p>Latitude: { this.props.lat }</p>
-          <p>Longitude: { this.props.lng }</p>
-        </div>
-     </Popup>
-    </Marker>
-    )
+      <Marker
+        position={
+          [parseFloat(pings.latitude), parseFloat(pings.longitude)]}>
+        <Popup keepInView={true} className='custom-popup'>
+          <div className='shark-data'>
+            <h3>{ shark.name }</h3>
+            <p>Species: { shark.species }</p>
+            <p>Length: { shark.length }</p>
+            <p>Weight: { shark.weight }</p>
+            <p>Date: { pings.datetime }</p>
+            <LinkWithContext to={{
+              pathname: `/yung-charts/${shark.id}`,
+              sharkData: shark
+            }}>
+              <button className='popup-btn'>
+                <span>Shark Details</span>
+              </button>
+            </LinkWithContext>
+            <button
+              id={ shark.name }
+              onClick={ (e) => this.props.handleTrackShark(e) }
+            >
+              Track Shark
+            </button>
+          </div>
+        </Popup>
+      </Marker>
+    );
   }
 }
 
+
+
+
+
 export default AppContainer(SharkMarker);
+
+
 

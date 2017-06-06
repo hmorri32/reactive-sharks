@@ -170,7 +170,7 @@ class SharkDetail extends Component {
         type='line'
       />
      </div>
-    )
+    );
   }
 
   renderSharkDetail() {
@@ -178,7 +178,7 @@ class SharkDetail extends Component {
     const { name, species, gender, stageOfLife, length, weight, tagLocation, dist_total, description } = currentShark;
     return(
       <div className='detail-div'>
-        <h1>All About {name}</h1>
+        <h1>{name.toUpperCase()}</h1>
         <p>Species: {species}</p>
         <p>Gender: {gender}</p>
         <p>Stage of Life: {stageOfLife}</p>
