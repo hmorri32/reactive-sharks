@@ -10,6 +10,7 @@ const app          = module.exports = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('port', process.env.PORT || 3001);
 
 app.use(favicon(path.join(__dirname, 'client/public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -19,7 +20,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// app.use('/users', users);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -33,6 +33,11 @@ app.use((err, req, res, next) => {
 
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(app.get('port'), () => {
+/* eslint-disable no-console */
+  console.log(`It's ultra chill at ${app.get('port')}`);
 });
 
 module.exports = app;
