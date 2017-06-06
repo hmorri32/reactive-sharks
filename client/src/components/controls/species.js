@@ -18,7 +18,6 @@ export const SpeciesPanel = ({ species, handleClick, resetMap, resetAll }) => {
 
   const renderSpeciesBtns = () => {
     const sortedSpecies = species.sort().map((specie, i) => { return { name: specie, icon: speciesIcons[i] } });
-    console.log(sortedSpecies);
     return sortedSpecies.map((specie, i) =>
       <SpecieButton
         key={i}
