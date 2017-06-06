@@ -11,6 +11,7 @@ import whale from '../../images/whale.svg';
 import ship from '../../images/ship.svg';
 import turtle from '../../images/turtle.svg';
 import star from '../../images/all.svg';
+import arrow from '../../images/triangle.svg';
 
 const speciesIcons = [blacktip, blue, bull, turtle, hammerhead, mako, ship, blacktip, tiger, whale, white];
 
@@ -32,7 +33,7 @@ export const SpeciesPanel = ({ species, handleClick, resetMap, resetAll }) => {
   return (
     <div className='species-panel'>
       <div className='map-toggle-wrap'>
-        <span className='map-type'>View All</span>
+        <span className='map-type'>View All<img className='arrow' src={arrow}/></span>
         <button
           onClick={ () => resetAll() }
           className='specie-btn'
