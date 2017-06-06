@@ -127,6 +127,8 @@ class App extends Component {
         const pings = shark.pings[0];
         return ( 
           <SharkMarker
+            zoom={this.state.zoom}
+            resetMap={() => this.resetMap()}
             handleTrackShark={(e) => this.handleTrackShark(e)}
             key={ i }
             shark={shark}
@@ -145,6 +147,8 @@ class App extends Component {
         while (i < 20 ) {
           return (
             <SharkMarker
+              zoom={this.state.zoom}
+              resetMap={() => this.resetMap()}
               handleTrackShark={(e) => this.handleTrackShark(e)}
               key={ i }
               shark={current}
