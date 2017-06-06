@@ -23,24 +23,16 @@
   color: #fff;
   font-size: .9em;
   width: 90px; }
-  .map-type:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    right: -20px;
-    width: 0;
-    height: 0;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    border-left-color: #9D0300;
-    border-top-width: .75rem;
-    border-right-width: .75rem;
-    border-bottom-width: .75rem;
-    border-left-width: .75rem;
-    border-style: solid; }
+
+.arrow {
+  display: block;
+  position: absolute;
+  right: -9px;
+  top: 0;
+  bottom: 0;
+  height: 15px;
+  width: 15px;
+  margin: auto; }
 
 .map-btn {
   display: block;
