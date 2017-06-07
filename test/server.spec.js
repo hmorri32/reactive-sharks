@@ -30,12 +30,13 @@ describe('server side testing', () => {
   });
 
   describe('client routes', () => {
-    it('should render HTML error for bogus route', () => {
+    it('should render HTML error for bogus route', (done) => {
       chai.request(server)
       .get('/ultrasweetroute')
       .end((error, response) => {
         response.should.have.status(404);
         response.text.should.include('no such file');
+        done();
       });
     });
   });
