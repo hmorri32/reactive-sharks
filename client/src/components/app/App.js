@@ -4,14 +4,10 @@ import SharkMarker                  from '../marker/marker';
 import { ControlPanel }             from '../controls/controls';
 import { SpeciesPanel }             from '../controls/species';
 import AppContainer                 from '../../containers/AppContainer';
-import * as helpers                 from '../../helpers/fetch.js';
 import satellite                    from '../../images/satellite.svg';
 import globe                        from '../../images/globe.svg';
 import road                         from '../../images/road.svg';
 import mountain                     from '../../images/snow.svg';
-import { Route }                    from 'react-router-dom';
-import { Link }                     from 'react-router-dom';
-import { Marker, Popup }            from 'react-leaflet';
 
 import './App.css';
 
@@ -34,7 +30,6 @@ class App extends Component {
       ],
       zoom: 2,
       pings: '',
-      sharks: '',
     };
   }
 
@@ -44,7 +39,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sharks !== nextProps.sharks) {
-      this.setState({ sharks: nextProps.sharks });
+      this.renderInitialSharks();
     }
   }
 
@@ -116,17 +111,17 @@ class App extends Component {
   }
 
   renderInitialSharks() {
-    const { current } = this.state;
+    const { current, zoom } = this.state;
     const { sharks } = this.props;
     if (sharks.length > 0 && !current) {
       return sharks.map((shark, i) => {
         const pings = shark.pings[0];
         return (
           <SharkMarker
-            zoom={this.state.zoom}
+            zoom={zoom}
             resetMap={() => this.resetMap()}
             handleTrackShark={(e) => this.handleTrackShark(e)}
-            key={ i }
+            key={i}
             shark={shark}
             pings={pings}
          />
@@ -136,17 +131,17 @@ class App extends Component {
   }
 
   renderPings() {
-    const { current } = this.state;
+    const { current, zoom } = this.state;
     if (current) {
       const pings = current.pings.slice(0, 20);
       return pings.map((ping, i) => {
         while (i < 20 ) {
           return (
             <SharkMarker
-              zoom={this.state.zoom}
+              zoom={zoom}
               resetMap={() => this.resetMap()}
               handleTrackShark={(e) => this.handleTrackShark(e)}
-              key={ i }
+              key={i}
               shark={current}
               pings={ping}
             />
@@ -157,7 +152,7 @@ class App extends Component {
   }
 
   render() {
-    const { sharks, species } = this.props;
+    const { sharks, species, history, router } = this.props;
     const { zoom, position, pings, mapLayers, currentLayer, maxBounds } = this.state;
     return (
       <div className="App">
@@ -166,8 +161,8 @@ class App extends Component {
           { this.renderOptions() }
         </select>
         <ControlPanel
-          history = {this.props.history}
-          router = {this.props.router}
+          history={ history }
+          router={ router }
           mapLayers={ mapLayers }
           sharks={ sharks }
           handleChange={ this.handleChange.bind(this) }
@@ -184,7 +179,7 @@ class App extends Component {
           maxBounds={ maxBounds }
         >
           <TileLayer
-            url={`http://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
+            url={`https://server.arcgisonline.com/ArcGIS/rest/services/${currentLayer}/tile/{z}/{y}/{x}`}
           />
             { this.renderPings() }
             { this.renderInitialSharks() }
@@ -194,7 +189,7 @@ class App extends Component {
                   color={'red'}
                   positions={pings}
                 />
-              }
+            }
 
         </Map>
         <SpeciesPanel

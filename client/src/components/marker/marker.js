@@ -42,8 +42,9 @@ class SharkMarker extends Component {
                 <span>Shark Details</span>
               </button>
             </LinkWithContext>
-             {zoom === 2 
+            { zoom === 2
               ? <button
+                  disabled={ shark.pings.length < 20 }
                   id={ shark.name }
                   onClick={(e) => handleTrackShark(e)}>
                   Track Shark

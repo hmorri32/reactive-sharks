@@ -77,4 +77,8 @@
   button:hover {
     background-color: #2e79ac;
   }
+  button:disabled {
+    background-color: lightgrey;
+    cursor: default;
+  }
 }
