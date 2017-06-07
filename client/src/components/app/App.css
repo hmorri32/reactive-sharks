@@ -191,3 +191,7 @@
 
 .shark-data button:hover {
   background-color: #2e79ac; }
+
+.shark-data button:disabled {
+  background-color: lightgrey;
+  cursor: default; }
