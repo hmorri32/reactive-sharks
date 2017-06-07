@@ -4,8 +4,16 @@ import arrow from '../../images/triangle.svg';
 
 export const Button = ({ handleClick, className, icon, id }) => {
   return (
-    <div className='map-toggle-wrap'>
-      <span className='map-type'>{ id }<img className='arrow' src={arrow}/></span>
+    <div
+      onClick={ (e) => handleClick(e) }
+      id={ id }
+      className='map-toggle-wrap'>
+      <span
+        id={id}
+        className='map-type'
+        onClick={ (e) => handleClick(e) }>
+        { id }<img className='arrow' src={arrow}/>
+      </span>
       <button
         className={ className }
       >
