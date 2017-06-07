@@ -11,7 +11,7 @@ const path          = require('path');
 // });
 
 router.get('/api/v1/sharks', (request, response) => {
-  const { species } = request.query;
+  const species = request.query.species;
 
   if(!species) {
     database('sharks').select()
