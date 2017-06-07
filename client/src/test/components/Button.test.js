@@ -12,7 +12,7 @@ describe('Button Component', () => {
 
     expect(wrapper.find('.map-toggle-wrap')).to.have.length(1);
     expect(wrapper.find('.map-toggle-btn')).to.have.length(1);
-    expect(wrapper.find('img')).to.have.length(1);
+    expect(wrapper.find('img')).to.have.length(2);
   });
 
   it('s children have props', () => {

@@ -19,3 +19,4 @@ export function withContext(WrappedComponent, context){
 
   return ContextProvider;
 }
+ 

@@ -21,7 +21,7 @@ class SharkMarker extends Component {
   }
 
   render() {
-    const LinkWithContext  = withContext(Link, this.context)
+    const LinkWithContext = withContext(Link, this.context)
     const { shark, pings, resetMap, handleTrackShark, zoom } = this.props;
     return (
       <Marker
@@ -57,11 +57,4 @@ class SharkMarker extends Component {
   }
 }
 
-
-
-
-
 export default AppContainer(SharkMarker);
-
-
-

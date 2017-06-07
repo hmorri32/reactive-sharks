@@ -44,7 +44,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sharks !== nextProps.sharks) {
-      this.setState({ sharks: nextProps.sharks })
+      this.setState({ sharks: nextProps.sharks });
     }
   }
 
