@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "lint": "eslint .",
-    "test": "./node_modules/.bin/mocha ./test/**.js && cd client/ && npm test",
+    "test": "./node_modules/.bin/mocha ./test/**.js",
     "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
